@@ -10,6 +10,13 @@
 - **現代化日系 UI**：採用 **Tocas UI** 設計系統，提供柔和、現代的視覺體驗。
 - **Docker 支援**：提供 Docker Image (`lokisalmonneko/s4n-donate-system`) 與 Docker Compose 配置。
 
+## 網站頁面說明
+
+- **首頁 (`/`)**: 系統首頁。
+- **管理後台 (`/dashboard`)**: 實況主或管理員使用的後台，可設定通知樣式、金流開關、查看贊助紀錄。
+- **OBS 瀏覽器來源 (`/obs`)**: 專為 OBS 設計的通知頁面，請將此網址加入 OBS 的瀏覽器來源。
+- **管理員登入 (`/login`)**: 後台登入頁面。
+
 ## 快速部署 (Zeabur)
 
 [![Deploy on Zeabur](https://zeabur.com/button.svg)](https://zeabur.com/templates/PZ7FR9?referralCode=LokiSalmonNeko)
@@ -58,13 +65,6 @@
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Zeabur Documentation](https://docs.zeabur.com)
 - [Tocas UI](https://tocas-ui.com/)
-
-## 網站頁面說明
-
-- **首頁 (`/`)**: 系統首頁。
-- **管理後台 (`/dashboard`)**: 實況主或管理員使用的後台，可設定通知樣式、金流開關、查看贊助紀錄。
-- **OBS 瀏覽器來源 (`/obs`)**: 專為 OBS 設計的通知頁面，請將此網址加入 OBS 的瀏覽器來源。
-- **管理員登入 (`/login`)**: 後台登入頁面。
 
 ## 授權
 
