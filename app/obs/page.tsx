@@ -9,6 +9,7 @@ interface AlertSettings {
     fontFamily: string;
     duration: number;
     animationType: string;
+    messageTemplate?: string;
 }
 
 interface Donation {
@@ -108,11 +109,14 @@ export default function OBSPage() {
                         <div className="absolute top-0 left-0 w-full h-2 bg-[var(--color-primary)]"></div>
 
                         <h1 className="text-4xl font-black text-[var(--color-primary)] mb-2 drop-shadow-sm">
-                            {currentAlert.donorName}
+                            {(settings.messageTemplate || '{name} 贊助了 ${amount}')
+                                .replace('{name}', currentAlert.donorName)
+                                .replace('{amount}', currentAlert.amount.toString())
+                                .split('$').map((part: string, i: number) => (
+                                    i === 0 ? part : <span key={i} className="text-[var(--color-accent)] text-3xl">${part}</span>
+                                ))
+                            }
                         </h1>
-                        <div className="text-2xl font-bold text-[var(--color-text)] mb-4">
-                            贊助了 <span className="text-[var(--color-accent)] text-3xl">${currentAlert.amount}</span>
-                        </div>
                         {currentAlert.message && (
                             <p className="text-xl text-[var(--color-text-light)] font-medium break-words max-w-lg leading-relaxed">
                                 {currentAlert.message}

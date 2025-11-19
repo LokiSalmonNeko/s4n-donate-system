@@ -16,7 +16,7 @@ export async function POST(request: Request) {
         const body = await request.json();
         const {
             imageUrl, soundUrl, fontFamily, duration, animationType,
-            bannerUrl, logoUrl, siteName, enableEcpay, enableOpay
+            bannerUrl, logoUrl, siteName, enableEcpay, enableOpay, messageTemplate
         } = body;
 
         // 檢查是否已有設定
@@ -28,14 +28,14 @@ export async function POST(request: Request) {
                 where: { id: existing.id },
                 data: {
                     imageUrl, soundUrl, fontFamily, duration, animationType,
-                    bannerUrl, logoUrl, siteName, enableEcpay, enableOpay
+                    bannerUrl, logoUrl, siteName, enableEcpay, enableOpay, messageTemplate
                 },
             });
         } else {
             settings = await prisma.alertSettings.create({
                 data: {
                     imageUrl, soundUrl, fontFamily, duration, animationType,
-                    bannerUrl, logoUrl, siteName, enableEcpay, enableOpay
+                    bannerUrl, logoUrl, siteName, enableEcpay, enableOpay, messageTemplate
                 },
             });
         }

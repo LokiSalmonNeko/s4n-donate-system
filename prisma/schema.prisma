@@ -51,6 +51,9 @@ model AlertSettings {
   enableEcpay   Boolean  @default(true) // 啟用綠界
   enableOpay    Boolean  @default(true) // 啟用歐付寶
   
+  // 通知訊息模板
+  messageTemplate String @default("{name} 贊助了 ${amount}") // 支援 {name}, {amount}
+  
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }

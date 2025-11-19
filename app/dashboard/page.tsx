@@ -14,6 +14,7 @@ export default function DashboardPage() {
         siteName: 'S4N Donate',
         enableEcpay: true,
         enableOpay: true,
+        messageTemplate: '{name} 贊助了 ${amount}',
     });
     const [donations, setDonations] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -70,12 +71,74 @@ export default function DashboardPage() {
                 <div className="column">
                     <div className="ts-box">
                         <div className="ts-content">
-                            <div className="ts-header is-heavy">通知設定</div>
+                            <div className="ts-header is-heavy">系統設定</div>
                         </div>
                         <div className="ts-divider"></div>
                         <div className="ts-content">
                             <form onSubmit={handleSaveSettings}>
                                 <div className="ts-grid is-stacked">
+                                    <div className="column">
+                                        <label className="ts-text is-label">網站名稱</label>
+                                        <div className="ts-input is-fluid">
+                                            <input
+                                                type="text"
+                                                value={settings.siteName || ''}
+                                                onChange={(e) => setSettings({ ...settings, siteName: e.target.value })}
+                                                placeholder="S4N Donate"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="column">
+                                        <label className="ts-text is-label">Logo URL</label>
+                                        <div className="ts-input is-fluid">
+                                            <input
+                                                type="url"
+                                                value={settings.logoUrl || ''}
+                                                onChange={(e) => setSettings({ ...settings, logoUrl: e.target.value })}
+                                                placeholder="https://example.com/logo.png"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="column">
+                                        <label className="ts-text is-label">Banner URL</label>
+                                        <div className="ts-input is-fluid">
+                                            <input
+                                                type="url"
+                                                value={settings.bannerUrl || ''}
+                                                onChange={(e) => setSettings({ ...settings, bannerUrl: e.target.value })}
+                                                placeholder="https://example.com/banner.jpg"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="column">
+                                        <label className="ts-text is-label">金流開關</label>
+                                        <div className="ts-grid is-2-columns">
+                                            <div className="column">
+                                                <label className="ts-switch">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={settings.enableEcpay !== false}
+                                                        onChange={(e) => setSettings({ ...settings, enableEcpay: e.target.checked })}
+                                                    />
+                                                    <span className="label">啟用綠界 (ECPay)</span>
+                                                </label>
+                                            </div>
+                                            <div className="column">
+                                                <label className="ts-switch">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={settings.enableOpay !== false}
+                                                        onChange={(e) => setSettings({ ...settings, enableOpay: e.target.checked })}
+                                                    />
+                                                    <span className="label">啟用歐付寶 (O'Pay)</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="column">
+                                        <div className="ts-divider is-section"></div>
+                                        <div className="ts-header is-heavy is-small has-bottom-spaced">通知樣式設定</div>
+                                    </div>
                                     <div className="column">
                                         <label className="ts-text is-label">圖片 URL</label>
                                         <div className="ts-input is-fluid">
@@ -122,10 +185,66 @@ export default function DashboardPage() {
                                         </div>
                                     </div>
                                     <div className="column">
+                                        <label className="ts-text is-label">通知訊息模板</label>
+                                        <div className="ts-input is-fluid">
+                                            <input
+                                                type="text"
+                                                value={settings.messageTemplate || ''}
+                                                onChange={(e) => setSettings({ ...settings, messageTemplate: e.target.value })}
+                                                placeholder="{name} 贊助了 ${amount}"
+                                            />
+                                        </div>
+                                        <div className="ts-text is-small is-secondary has-top-spaced-small">
+                                            可用變數: <code>{'{name}'}</code> (贊助者), <code>{'{amount}'}</code> (金額)
+                                        </div>
+                                    </div>
+                                    <div className="column">
                                         <label className="ts-text is-label">OBS Browser Source URL</label>
-                                        <div className="ts-box is-secondary is-horizontal">
+                                        <div className="ts-input is-fluid is-action">
+                                            <input
+                                                type="text"
+                                                readOnly
+                                                value={typeof window !== 'undefined' ? `${window.location.origin}/obs` : '/obs'}
+                                            />
+                                            <button
+                                                className="ts-button is-icon"
+                                                type="button"
+                                                onClick={() => {
+                                                    const url = typeof window !== 'undefined' ? `${window.location.origin}/obs` : '/obs';
+                                                    navigator.clipboard.writeText(url);
+                                                    alert('已複製連結');
+                                                }}
+                                            >
+                                                <span className="ts-icon is-copy-icon"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="column">
+                                        <div className="ts-header is-heavy is-small has-bottom-spaced-small">預覽與測試</div>
+                                        <div className="ts-box has-top-spaced-small">
+                                            <div className="ts-content is-center-aligned is-secondary" style={{ background: '#333', height: '300px', position: 'relative', overflow: 'hidden' }}>
+                                                <iframe
+                                                    src="/obs"
+                                                    style={{ width: '100%', height: '100%', border: 'none', pointerEvents: 'none' }}
+                                                    title="OBS Preview"
+                                                ></iframe>
+                                            </div>
+                                            <div className="ts-divider"></div>
                                             <div className="ts-content is-dense">
-                                                {typeof window !== 'undefined' ? `${window.location.origin}/obs` : '/obs'}
+                                                <button
+                                                    type="button"
+                                                    className="ts-button is-fluid is-outlined"
+                                                    onClick={async () => {
+                                                        try {
+                                                            await fetch('/api/socket/test', { method: 'POST' });
+                                                        } catch (e) {
+                                                            alert('測試發送失敗');
+                                                        }
+                                                    }}
+                                                >
+                                                    <span className="ts-icon is-bullhorn-icon is-end-spaced"></span>
+                                                    發送測試通知
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -149,9 +268,11 @@ export default function DashboardPage() {
                                     <div className="ts-header is-heavy">最近贊助</div>
                                 </div>
                                 <div className="column">
-                                    <button onClick={fetchData} className="ts-button is-small is-icon is-secondary">
-                                        <span className="ts-icon is-rotate-right-icon"></span>
-                                    </button>
+                                    <div className="ts-wrap is-end-aligned">
+                                        <button onClick={fetchData} className="ts-button is-small is-icon is-secondary">
+                                            <span className="ts-icon is-rotate-right-icon"></span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
