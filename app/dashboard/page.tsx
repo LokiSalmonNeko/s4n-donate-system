@@ -22,6 +22,7 @@ export default function DashboardPage() {
         backgroundColor: '#ffffff',
         borderColor: '#000000',
         alertWidth: 600,
+        alertHeight: 0, // 0 means auto/null
         verticalAlign: 'center',
         horizontalAlign: 'center',
     });
@@ -44,7 +45,10 @@ export default function DashboardPage() {
             const donationsData = await donationsRes.json();
 
             if (settingsData.id) {
-                setSettings(settingsData);
+                setSettings({
+                    ...settingsData,
+                    alertHeight: settingsData.alertHeight || 0
+                });
             }
             setDonations(donationsData);
         } catch (error) {
@@ -58,10 +62,17 @@ export default function DashboardPage() {
         e.preventDefault();
         setSaving(true);
         try {
+            // Convert 0 to null for DB if needed, or keep as 0 and handle in frontend
+            // Prisma Int? allows null. Let's send null if 0 or empty
+            const payload = {
+                ...settings,
+                alertHeight: settings.alertHeight > 0 ? settings.alertHeight : null
+            };
+
             await fetch('/api/settings', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(settings),
+                body: JSON.stringify(payload),
             });
             alert('設定已儲存');
             setLastSaved(Date.now());
@@ -113,7 +124,7 @@ export default function DashboardPage() {
                     {activeTab === 'basic' && (
                         <div className="ts-grid is-stacked">
                             <div className="column">
-                                <label className="ts-text is-label">網站名稱</label>
+                                <label className="ts-text is-label">網站名稱 (分頁標題)</label>
                                 <div className="ts-input is-fluid">
                                     <input
                                         type="text"
@@ -122,9 +133,10 @@ export default function DashboardPage() {
                                         placeholder="S4N Donate"
                                     />
                                 </div>
+                                <div className="ts-text is-small is-secondary has-top-spaced-small">顯示於瀏覽器分頁標題</div>
                             </div>
                             <div className="column">
-                                <label className="ts-text is-label">Logo 圖片連結</label>
+                                <label className="ts-text is-label">網站圖示 (Favicon)</label>
                                 <div className="ts-input is-fluid">
                                     <input
                                         type="text"
@@ -133,6 +145,7 @@ export default function DashboardPage() {
                                         placeholder="https://example.com/logo.png"
                                     />
                                 </div>
+                                <div className="ts-text is-small is-secondary has-top-spaced-small">顯示於瀏覽器分頁圖示 (建議使用 .ico 或 .png)</div>
                             </div>
                             <div className="column">
                                 <label className="ts-text is-label">Banner 圖片連結</label>
@@ -335,6 +348,18 @@ export default function DashboardPage() {
                                         placeholder="600"
                                     />
                                 </div>
+                            </div>
+                            <div className="column">
+                                <label className="ts-text is-label">通知高度 (px)</label>
+                                <div className="ts-input is-fluid">
+                                    <input
+                                        type="number"
+                                        value={settings.alertHeight || 0}
+                                        onChange={(e) => setSettings({ ...settings, alertHeight: Number(e.target.value) })}
+                                        placeholder="0 (自動)"
+                                    />
+                                </div>
+                                <div className="ts-text is-small is-secondary has-top-spaced-small">設為 0 代表自動高度</div>
                             </div>
                             <div className="column">
                                 <label className="ts-text is-label">垂直對齊</label>

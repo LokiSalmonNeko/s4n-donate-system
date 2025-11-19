@@ -17,6 +17,7 @@ interface AlertSettings {
     backgroundColor?: string;
     borderColor?: string;
     alertWidth?: number;
+    alertHeight?: number;
     verticalAlign?: string;
     horizontalAlign?: string;
 }
@@ -205,6 +206,7 @@ export default function OBSPage() {
                         gap: '1rem',
                         fontFamily: settings.fontFamily,
                         width: settings.alertWidth ? `${settings.alertWidth}px` : '600px',
+                        minHeight: settings.alertHeight ? `${settings.alertHeight}px` : 'auto',
                         maxWidth: '100%',
                         ...getAnimationStyles()
                     }}

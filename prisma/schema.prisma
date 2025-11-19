@@ -54,6 +54,7 @@ model AlertSettings {
   
   // 位置與大小設定
   alertWidth        Int      @default(600) // 通知寬度 (px)
+  alertHeight       Int?     // 通知高度 (px), optional
   verticalAlign     String   @default("center") // 垂直對齊 (start, center, end)
   horizontalAlign   String   @default("center") // 水平對齊 (start, center, end)
   

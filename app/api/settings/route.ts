@@ -18,7 +18,7 @@ export async function POST(request: Request) {
             imageUrl, soundUrl, fontFamily, duration, animationType,
             textColor, amountColor, fontSize,
             animationDuration, backgroundColor, borderColor,
-            alertWidth, verticalAlign, horizontalAlign,
+            alertWidth, alertHeight, verticalAlign, horizontalAlign,
             bannerUrl, logoUrl, siteName, enableEcpay, enableOpay, messageTemplate
         } = body;
 
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
                     imageUrl, soundUrl, fontFamily, duration, animationType,
                     textColor, amountColor, fontSize,
                     animationDuration, backgroundColor, borderColor,
-                    alertWidth, verticalAlign, horizontalAlign,
+                    alertWidth, alertHeight, verticalAlign, horizontalAlign,
                     bannerUrl, logoUrl, siteName, enableEcpay, enableOpay, messageTemplate
                 },
             });
@@ -43,7 +43,7 @@ export async function POST(request: Request) {
                     imageUrl, soundUrl, fontFamily, duration, animationType,
                     textColor, amountColor, fontSize,
                     animationDuration, backgroundColor, borderColor,
-                    alertWidth, verticalAlign, horizontalAlign,
+                    alertWidth, alertHeight, verticalAlign, horizontalAlign,
                     bannerUrl, logoUrl, siteName, enableEcpay, enableOpay, messageTemplate
                 },
             });
