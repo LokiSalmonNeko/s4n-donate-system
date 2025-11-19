@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  engineType    = "library"
+  binaryTargets = ["native"]
+  output        = "../lib/generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// 使用者 (管理員/實況主)
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String // 加密後的密碼
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 贊助紀錄
+model Donation {
+  id            String   @id @default(uuid())
+  amount        Int // 金額
+  message       String? // 留言
+  donorName     String // 贊助者暱稱
+  status        String // PENDING, SUCCESS, FAILED
+  paymentMethod String // ECPAY, OPAY
+  paymentId     String? // 第三方支付的訂單編號
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// 通知設定
+// 通知與網站設定
+model AlertSettings {
+  id            String  @id @default(uuid())
+  imageUrl      String? // 圖片 URL
+  soundUrl      String? // 音效 URL
+  fontFamily    String  @default("sans-serif") // 字型
+  duration      Int     @default(5000) // 顯示時間 (毫秒)
+  animationType String  @default("fade") // 動畫類型: fade, slide-up, slide-down, zoom, bounce
+
+  // 文字樣式設定
+  textColor   String @default("#1a1a1a") // 主要文字顏色
+  amountColor String @default("#ff6b6b") // 金額強調顏色
+  fontSize    Int    @default(32) // 文字大小 (px)
+
+  // 進階樣式設定
+  animationDuration Int    @default(1000) // 動畫持續時間 (毫秒)
+  backgroundColor   String @default("#ffffff") // 背景顏色
+  borderColor       String @default("#000000") // 邊框顏色
+
+  // 位置與大小設定
+  alertWidth      Int    @default(600) // 通知寬度 (px)
+  verticalAlign   String @default("center") // 垂直對齊 (start, center, end)
+  horizontalAlign String @default("center") // 水平對齊 (start, center, end)
+
+  // 網站自訂設定
+  bannerUrl String? // 贊助頁面 Banner 圖片連結
+  logoUrl   String? // 標籤頁 Logo 圖片連結
+  siteName  String  @default("S4N Donate") // 標籤頁網站名稱
+
+  // 金流開關
+  enableEcpay Boolean @default(true) // 啟用綠界
+  enableOpay  Boolean @default(true) // 啟用歐付寶
+
+  // 通知訊息模板
+  messageTemplate String @default("{name} 贊助了 ${amount}") // 支援 {name}, {amount}
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

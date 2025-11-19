@@ -100,31 +100,43 @@ export default function OBSPage() {
 
     if (!settings) return null;
 
-    // Vivid Animation Styles
-    const transitionStyle = {
-        transitionProperty: 'all',
-        transitionDuration: `${settings.animationDuration || 1000}ms`,
-        transitionTimingFunction: isVisible
-            ? 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' // easeOutBack (Entry)
-            : 'cubic-bezier(0.6, -0.28, 0.735, 0.045)', // easeInBack (Exit)
-    };
+    // Animation Styles Calculation
+    const getAnimationStyles = (): React.CSSProperties => {
+        const base: React.CSSProperties = {
+            transform: 'translate(0, 0) scale(1)',
+            opacity: 1,
+            transitionProperty: 'all',
+            transitionDuration: `${settings.animationDuration || 1000}ms`,
+            transitionTimingFunction: isVisible
+                ? 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' // easeOutBack (Entry)
+                : 'cubic-bezier(0.6, -0.28, 0.735, 0.045)', // easeInBack (Exit)
+        };
 
-    const getAnimationClass = () => {
-        const base = 'transform';
         if (!isVisible) {
-            // Exit States
+            base.opacity = 0;
             switch (settings.animationType) {
-                case 'slide-up': return `${base} opacity-0 translate-y-10 scale-95`;
-                case 'slide-down': return `${base} opacity-0 -translate-y-10 scale-95`;
-                case 'zoom': return `${base} opacity-0 scale-0`;
-                case 'bounce': return `${base} opacity-0 scale-50`;
+                case 'slide-up':
+                    base.transform = 'translateY(2.5rem) scale(0.95)';
+                    break;
+                case 'slide-down':
+                    base.transform = 'translateY(-2.5rem) scale(0.95)';
+                    break;
+                case 'zoom':
+                    base.transform = 'scale(0)';
+                    break;
+                case 'bounce':
+                    base.transform = 'scale(0.5)';
+                    break;
                 case 'fade':
-                default: return `${base} opacity-0`;
+                default:
+                    // just opacity 0
+                    break;
             }
+        } else {
+            base.opacity = 1;
+            base.transform = 'translateY(0) scale(1)';
         }
-
-        // Entry States (Active)
-        return `${base} opacity-100 translate-y-0 scale-100`;
+        return base;
     };
 
     // Positioning styles
@@ -136,6 +148,8 @@ export default function OBSPage() {
             padding: '2rem',
             boxSizing: 'border-box',
             overflow: 'hidden',
+            backgroundColor: 'transparent',
+            minHeight: '100vh',
         };
 
         switch (settings.verticalAlign) {
@@ -180,47 +194,72 @@ export default function OBSPage() {
     };
 
     return (
-        <div className="min-h-screen bg-transparent" style={getContainerStyle()}>
+        <div style={getContainerStyle()}>
             {currentAlert && (
                 <div
-                    className={`${getAnimationClass()} flex flex-col items-center text-center space-y-4`}
                     style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        gap: '1rem',
                         fontFamily: settings.fontFamily,
-                        ...transitionStyle,
                         width: settings.alertWidth ? `${settings.alertWidth}px` : '600px',
-                        maxWidth: '100%'
+                        maxWidth: '100%',
+                        ...getAnimationStyles()
                     }}
                 >
                     {settings.imageUrl && (
                         <img
                             src={settings.imageUrl}
                             alt="Alert Image"
-                            className="max-w-xs max-h-xs object-contain"
-                            style={{ marginBottom: '1rem' }}
+                            style={{
+                                maxWidth: '20rem',
+                                maxHeight: '20rem',
+                                objectFit: 'contain',
+                                marginBottom: '1rem'
+                            }}
                         />
                     )}
 
                     <div
-                        className="p-6 rounded-xl shadow-2xl border-4 relative overflow-hidden w-full"
                         style={{
+                            padding: '1.5rem',
+                            borderRadius: '0.75rem',
+                            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                            border: '4px solid',
+                            position: 'relative',
+                            overflow: 'hidden',
+                            width: '100%',
                             backgroundColor: settings.backgroundColor || '#ffffff',
                             borderColor: settings.borderColor || '#000000'
                         }}
                     >
                         <h1
-                            className="font-black mb-2 drop-shadow-sm"
                             style={{
+                                fontWeight: 900,
+                                marginBottom: '0.5rem',
+                                filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1))',
                                 color: settings.textColor || '#1a1a1a',
                                 fontSize: `${settings.fontSize || 32}px`,
-                                lineHeight: '1.4'
+                                lineHeight: '1.4',
+                                margin: 0
                             }}
                         >
                             {renderMessage()}
                         </h1>
                         {currentAlert.message && (
                             <p
-                                className="text-xl font-medium break-words max-w-lg leading-relaxed mx-auto"
-                                style={{ color: settings.textColor || '#1a1a1a', opacity: 0.9 }}
+                                style={{
+                                    fontSize: '1.25rem',
+                                    fontWeight: 500,
+                                    wordBreak: 'break-word',
+                                    maxWidth: '32rem',
+                                    lineHeight: 1.625,
+                                    margin: '0 auto',
+                                    color: settings.textColor || '#1a1a1a',
+                                    opacity: 0.9
+                                }}
                             >
                                 {currentAlert.message}
                             </p>

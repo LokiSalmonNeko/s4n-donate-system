@@ -24,7 +24,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://unpkg.com/tocas@5.0.0/dist/tocas.min.css" />
         <script src="https://unpkg.com/tocas@5.0.0/dist/tocas.min.js" async></script>
       </head>
-      <body className={`${notoSansTC.variable} antialiased`}>
+      <body className={`${notoSansTC.variable}`}>
         {children}
       </body>
     </html>
