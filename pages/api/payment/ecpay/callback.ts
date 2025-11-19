@@ -38,8 +38,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponseS
 
         const isValid = validateCheckMacValue(
             data,
-            process.env.ECPAY_HASH_KEY || '5294y06JbISpM5x9',
-            process.env.ECPAY_HASH_IV || 'v77hoKGq4kWxNNIS'
+            process.env.ECPAY_HASH_KEY || 'spPjZn66i0OhqJsQ',
+            process.env.ECPAY_HASH_IV || 'hT5OJckN45isQTTs'
         );
 
         if (!isValid) {

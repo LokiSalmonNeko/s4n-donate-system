@@ -46,7 +46,7 @@ export async function POST(request: Request) {
         }).replace(/\//g, '/');
 
         const baseParams = {
-            MerchantID: process.env.ECPAY_MERCHANT_ID || '2000132', // 測試用 ID
+            MerchantID: process.env.ECPAY_MERCHANT_ID || '3002599', // 測試用 ID
             MerchantTradeNo: donation.id.replace(/-/g, '').substring(0, 20), // ECPay 限制 20 碼
             MerchantTradeDate: merchantTradeDate,
             PaymentType: 'aio',
@@ -61,8 +61,8 @@ export async function POST(request: Request) {
 
         const checkMacValue = generateCheckMacValue(
             baseParams,
-            process.env.ECPAY_HASH_KEY || '5294y06JbISpM5x9', // 測試用 Key
-            process.env.ECPAY_HASH_IV || 'v77hoKGq4kWxNNIS'  // 測試用 IV
+            process.env.ECPAY_HASH_KEY || 'spPjZn66i0OhqJsQ', // 測試用 Key
+            process.env.ECPAY_HASH_IV || 'hT5OJckN45isQTTs'  // 測試用 IV
         );
 
         return NextResponse.json({

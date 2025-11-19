@@ -3,36 +3,89 @@ kind: Template
 metadata:
   name: S4N Donate System
 spec:
+  description: Open source streamer sponsorship platform with ECPay/O'Pay support and OBS alerts.
+  coverImage: 
+  variables:
+    - type: DOMAIN
+      key: PUBLIC_DOMAIN
+      name: Domain
+      description: "您想要綁定的網域 (例如: my-donate.zeabur.app)"
+    - type: STRING
+      key: ECPAY_MERCHANT_ID
+      name: ECPay Merchant ID
+      description: 綠界商店代號 (預設為測試帳號 3002599，若留空則使用預設值)
+    - type: STRING
+      key: ECPAY_HASH_KEY
+      name: ECPay Hash Key
+      description: 綠界 Hash Key (預設為測試帳號 spPjZn66i0OhqJsQ，若留空則使用預設值)
+    - type: STRING
+      key: ECPAY_HASH_IV
+      name: ECPay Hash IV
+      description: 綠界 Hash IV (預設為測試帳號 hT5OJckN45isQTTs，若留空則使用預設值)
+    - type: STRING
+      key: OPAY_MERCHANT_ID
+      name: O'Pay Merchant ID
+      description: 歐付寶商店代號 (預設為測試帳號 2000132，若留空則使用預設值)
+    - type: STRING
+      key: OPAY_HASH_KEY
+      name: O'Pay Hash Key
+      description: 歐付寶 Hash Key (預設為測試帳號 5294y06JbISpM5x9，若留空則使用預設值)
+    - type: STRING
+      key: OPAY_HASH_IV
+      name: O'Pay Hash IV
+      description: 歐付寶 Hash IV (預設為測試帳號 v77hoKGq4kWxNNIS，若留空則使用預設值)
+  readme: |-
+    # S4N Donate System
+    這是一個開源的實況主贊助平台，支援 ECPay (綠界) 和 O'Pay (歐付寶) 金流，並提供 OBS 即時通知功能。
+
+    ## 功能特色
+
+    - **公開贊助頁面**：觀眾可以輸入暱稱、金額、留言並選擇支付方式。
+    - **實況主後台**：查看最近贊助紀錄，設定通知樣式 (圖片、音效、字型)。
+    - **OBS 通知**：專屬的 Browser Source 網址，贊助成功後即時顯示動畫與播放音效。
+    - **現代化日系 UI**：採用 **Tocas UI** 設計系統，提供柔和、現代的視覺體驗。
+    - **Docker 支援**：提供 Docker Image (`lokisalmonneko/s4n-donate-system`) 與 Docker Compose 配置。
+
+    Gtihub: https://github.com/LokiSalmonNeko/s4n-donate-system
+
   services:
     - name: s4n-donate-system
       template: PREBUILT
+      domainKey: PUBLIC_DOMAIN
       spec:
-        image: lokisalmonneko/s4n-donate-system:latest
+        source:
+          image: lokisalmonneko/s4n-donate-system:latest
+        ports:
+          - id: web
+            port: 3000
+            type: HTTP
         env:
-          - name: DATABASE_URL
-            value: ${POSTGRES_URL}
-          - name: ECPAY_MERCHANT_ID
-            value: "2000132"
-          - name: ECPAY_HASH_KEY
-            value: "5294y06JbISpM5x9"
-          - name: ECPAY_HASH_IV
-            value: "v77hoKGq4kWxNNIS"
-          - name: OPAY_MERCHANT_ID
-            value: "2000132"
-          - name: OPAY_HASH_KEY
-            value: "5294y06JbISpM5x9"
-          - name: OPAY_HASH_IV
-            value: "v77hoKGq4kWxNNIS"
-          - name: NEXT_PUBLIC_BASE_URL
-            value: ${ZEABUR_WEB_URL}
+          DATABASE_URL:
+            default: ${POSTGRES_URL}
+          ECPAY_MERCHANT_ID:
+            default: ${ECPAY_MERCHANT_ID}
+          ECPAY_HASH_KEY:
+            default: ${ECPAY_HASH_KEY}
+          ECPAY_HASH_IV:
+            default: ${ECPAY_HASH_IV}
+          OPAY_MERCHANT_ID:
+            default: ${OPAY_MERCHANT_ID}
+          OPAY_HASH_KEY:
+            default: ${OPAY_HASH_KEY}
+          OPAY_HASH_IV:
+            default: ${OPAY_HASH_IV}
+          NEXT_PUBLIC_BASE_URL:
+            default: https://${PUBLIC_DOMAIN}
 
     - name: postgres
       template: PREBUILT
       spec:
-        image: postgres:15-alpine
+        source:
+          image: postgres:15-alpine
         ports:
-          - port: 5432
+          - id: db
+            port: 5432
             type: TCP
         env:
-          - name: POSTGRES_PASSWORD
-            value: ${PASSWORD}
+          POSTGRES_PASSWORD:
+            default: ${PASSWORD}

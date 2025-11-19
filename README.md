@@ -2,7 +2,7 @@
 
 這是一個開源的實況主贊助平台，支援 ECPay (綠界) 和 O'Pay (歐付寶) 金流，並提供 OBS 即時通知功能。
 
-[![Deployed on Zeabur](https://zeabur.com/deployed-on-zeabur-dark.svg)](https://zeabur.com/templates/8cvl58)
+[![Deploy on Zeabur](https://zeabur.com/button.svg)](https://zeabur.com/templates/PZ7FR9?referralCode=LokiSalmonNeko)
 
 ## 功能特色
 
@@ -14,20 +14,18 @@
 
 ## 快速部署 (Zeabur)
 
-本專案支援透過 Zeabur 一鍵部署，並使用預先建置好的 Docker Image，部署速度更快。
+本專案已發布為 Zeabur Template，您可以透過以下步驟一鍵部署：
 
-1. 點擊上方的 "Deployed on Zeabur" 按鈕。
-2. 選擇您的 GitHub 帳號進行授權。
-3. Zeabur 會自動建立服務並要求設定環境變數。
-4. 填入以下必要的環境變數：
-    - `DATABASE_URL`: (Zeabur 會自動提供 PostgreSQL 服務，通常不需要手動設定)
-    - `ECPAY_MERCHANT_ID`: 您的綠界商店代號
-    - `ECPAY_HASH_KEY`: 您的綠界 HashKey
-    - `ECPAY_HASH_IV`: 您的綠界 HashIV
-    - `OPAY_MERCHANT_ID`: 您的歐付寶商店代號
-    - `OPAY_HASH_KEY`: 您的歐付寶 HashKey
-    - `OPAY_HASH_IV`: 您的歐付寶 HashIV
-    - `NEXT_PUBLIC_BASE_URL`: 您的 Zeabur 應用程式網址 (例如 `https://your-app.zeabur.app`)
+1. 點擊上方的 "Deploy on Zeabur" 按鈕。
+2. 系統將引導您至 Zeabur Dashboard 並自動建立專案。
+3. 依照提示填入環境變數。
+    - 若您已有綠界或歐付寶帳號，請填入您的商店代號與金鑰。
+    - **若留空，系統將自動使用測試帳號進行部署，方便您快速體驗。**
+4. 部署完成後，Zeabur 會自動提供一組網域供您訪問。
+
+**注意**：
+- 資料庫 (PostgreSQL) 會自動建立並連接，無需額外設定。
+- 若您需要修改程式碼，請 Fork 本專案後使用 Git 部署方式。
 
 ## 本地開發
 
