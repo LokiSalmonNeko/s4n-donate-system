@@ -19,7 +19,7 @@ export async function POST(request: Request) {
             textColor, amountColor, fontSize,
             animationDuration, backgroundColor, borderColor,
             alertWidth, verticalAlign, horizontalAlign,
-            bannerUrl, logoUrl, siteName, enableEcpay, enableOpay, messageTemplate
+            bannerUrl, logoUrl, siteName, enableEcpay, enableOpay, messageTemplate, slogan
         } = body;
 
         // 檢查是否已有設定
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
                     textColor, amountColor, fontSize,
                     animationDuration, backgroundColor, borderColor,
                     alertWidth, verticalAlign, horizontalAlign,
-                    bannerUrl, logoUrl, siteName, enableEcpay, enableOpay, messageTemplate
+                    bannerUrl, logoUrl, siteName, enableEcpay, enableOpay, messageTemplate, slogan
                 },
             });
         } else {
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
                     textColor, amountColor, fontSize,
                     animationDuration, backgroundColor, borderColor,
                     alertWidth, verticalAlign, horizontalAlign,
-                    bannerUrl, logoUrl, siteName, enableEcpay, enableOpay, messageTemplate
+                    bannerUrl, logoUrl, siteName, enableEcpay, enableOpay, messageTemplate, slogan
                 },
             });
         }

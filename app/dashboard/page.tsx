@@ -12,6 +12,7 @@ export default function DashboardPage() {
         bannerUrl: '',
         logoUrl: '',
         siteName: 'S4N Donate',
+        slogan: '您的支持是我們最大的動力！',
         enableEcpay: true,
         enableOpay: true,
         messageTemplate: '{name} 贊助了 ${amount}',
@@ -120,6 +121,17 @@ export default function DashboardPage() {
                                         value={settings.siteName || ''}
                                         onChange={(e) => setSettings({ ...settings, siteName: e.target.value })}
                                         placeholder="S4N Donate"
+                                    />
+                                </div>
+                            </div>
+                            <div className="column">
+                                <label className="ts-text is-label">贊助頁面標語</label>
+                                <div className="ts-input is-fluid">
+                                    <input
+                                        type="text"
+                                        value={settings.slogan || ''}
+                                        onChange={(e) => setSettings({ ...settings, slogan: e.target.value })}
+                                        placeholder="您的支持是我們最大的動力！"
                                     />
                                 </div>
                             </div>

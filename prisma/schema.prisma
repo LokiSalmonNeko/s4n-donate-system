@@ -61,6 +61,7 @@ model AlertSettings {
   bannerUrl     String?  // 贊助頁面 Banner 圖片連結
   logoUrl       String?  // 標籤頁 Logo 圖片連結
   siteName      String   @default("S4N Donate") // 標籤頁網站名稱
+  slogan        String   @default("您的支持是我們最大的動力！") // 贊助頁面標語
   
   // 金流開關
   enableEcpay   Boolean  @default(true) // 啟用綠界
