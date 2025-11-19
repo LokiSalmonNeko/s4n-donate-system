@@ -7,6 +7,9 @@ interface Settings {
   bannerUrl?: string;
   logoUrl?: string;
   siteName?: string;
+  siteNameAlign?: 'left' | 'center' | 'right';
+  slogan?: string;
+  sloganAlign?: 'left' | 'center' | 'right';
   enableEcpay?: boolean;
   enableOpay?: boolean;
 }
@@ -103,6 +106,16 @@ export default function HomePage() {
     );
   }
 
+  // Helper to map alignment to Tocas UI class or style
+  const getAlignClass = (align?: string) => {
+    switch (align) {
+      case 'left': return 'is-start-aligned';
+      case 'right': return 'is-end-aligned';
+      case 'center':
+      default: return 'is-center-aligned';
+    }
+  };
+
   return (
     <div>
       <div className="ts-container is-narrow has-top-spaced-large">
@@ -118,9 +131,11 @@ export default function HomePage() {
             </div>
           )}
 
-          <div className="ts-content is-center-aligned">
-            <div className="ts-header is-heavy">{settings.siteName || '支持實況主'}</div>
-            <div className="ts-text is-secondary">您的支持是我們最大的動力！</div>
+          <div className={`ts-content ${getAlignClass(settings.siteNameAlign)}`}>
+            <div className="ts-header is-heavy">{settings.siteName || 'S4N Donate'}</div>
+          </div>
+          <div className={`ts-content ${getAlignClass(settings.sloganAlign)}`}>
+            <div className="ts-text is-secondary">{settings.slogan || '您的支持是我們最大的動力！'}</div>
           </div>
 
           <div className="ts-divider"></div>

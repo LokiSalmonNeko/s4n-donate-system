@@ -61,7 +61,11 @@ model AlertSettings {
   // 網站自訂設定
   bannerUrl     String?  // 贊助頁面 Banner 圖片連結
   logoUrl       String?  // 標籤頁 Logo 圖片連結
-  siteName      String   @default("S4N Donate") // 標籤頁網站名稱
+  siteName      String   @default("S4N Donate") // 標籤頁網站名稱 / 實況主名稱
+  siteNameAlign String   @default("center") // 實況主名稱對齊 (left, center, right)
+  browserTitle  String   @default("S4N Donate") // 瀏覽器分頁標題
+  slogan        String?  @default("您的支持是我們最大的動力！") // 標語
+  sloganAlign   String   @default("center") // 標語對齊 (left, center, right)
   
   // 金流開關
   enableEcpay   Boolean  @default(true) // 啟用綠界

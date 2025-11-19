@@ -25,6 +25,10 @@ export default function DashboardPage() {
         alertHeight: 0, // 0 means auto/null
         verticalAlign: 'center',
         horizontalAlign: 'center',
+        siteNameAlign: 'center',
+        browserTitle: 'S4N Donate',
+        slogan: '您的支持是我們最大的動力！',
+        sloganAlign: 'center',
     });
     const [donations, setDonations] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -124,16 +128,73 @@ export default function DashboardPage() {
                     {activeTab === 'basic' && (
                         <div className="ts-grid is-stacked">
                             <div className="column">
-                                <label className="ts-text is-label">網站名稱 (分頁標題)</label>
+                                <label className="ts-text is-label">瀏覽器分頁標題 (Browser Tab Title)</label>
                                 <div className="ts-input is-fluid">
                                     <input
                                         type="text"
-                                        value={settings.siteName || ''}
-                                        onChange={(e) => setSettings({ ...settings, siteName: e.target.value })}
+                                        value={settings.browserTitle || ''}
+                                        onChange={(e) => setSettings({ ...settings, browserTitle: e.target.value })}
                                         placeholder="S4N Donate"
                                     />
                                 </div>
-                                <div className="ts-text is-small is-secondary has-top-spaced-small">顯示於瀏覽器分頁標題</div>
+                                <div className="ts-text is-small is-secondary has-top-spaced-small">顯示於瀏覽器分頁標籤上的標題</div>
+                            </div>
+                            <div className="column">
+                                <label className="ts-text is-label">實況主名稱 (Streamer Name)</label>
+                                <div className="ts-grid is-2-columns">
+                                    <div className="column is-fluid">
+                                        <div className="ts-input is-fluid">
+                                            <input
+                                                type="text"
+                                                value={settings.siteName || ''}
+                                                onChange={(e) => setSettings({ ...settings, siteName: e.target.value })}
+                                                placeholder="S4N Donate"
+                                            />
+                                        </div>
+                                        <div className="ts-text is-small is-secondary has-top-spaced-small">顯示於贊助頁面標題</div>
+                                    </div>
+                                    <div className="column">
+                                        <div className="ts-select is-fluid">
+                                            <select
+                                                value={settings.siteNameAlign || 'center'}
+                                                onChange={(e) => setSettings({ ...settings, siteNameAlign: e.target.value })}
+                                            >
+                                                <option value="left">靠左</option>
+                                                <option value="center">置中</option>
+                                                <option value="right">靠右</option>
+                                            </select>
+                                        </div>
+                                        <div className="ts-text is-small is-secondary has-top-spaced-small">對齊方式</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="column">
+                                <label className="ts-text is-label">標語 (Slogan)</label>
+                                <div className="ts-grid is-2-columns">
+                                    <div className="column is-fluid">
+                                        <div className="ts-input is-fluid">
+                                            <input
+                                                type="text"
+                                                value={settings.slogan || ''}
+                                                onChange={(e) => setSettings({ ...settings, slogan: e.target.value })}
+                                                placeholder="您的支持是我們最大的動力！"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="column">
+                                        <div className="ts-select is-fluid">
+                                            <select
+                                                value={settings.sloganAlign || 'center'}
+                                                onChange={(e) => setSettings({ ...settings, sloganAlign: e.target.value })}
+                                            >
+                                                <option value="left">靠左</option>
+                                                <option value="center">置中</option>
+                                                <option value="right">靠右</option>
+                                            </select>
+                                        </div>
+                                        <div className="ts-text is-small is-secondary has-top-spaced-small">對齊方式</div>
+                                    </div>
+                                </div>
                             </div>
                             <div className="column">
                                 <label className="ts-text is-label">網站圖示 (Favicon)</label>

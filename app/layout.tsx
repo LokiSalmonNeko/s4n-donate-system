@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
   try {
     const settings = await prisma.alertSettings.findFirst();
     return {
-      title: settings?.siteName || "S4N Donate System",
+      title: settings?.browserTitle || settings?.siteName || "S4N Donate System",
       description: "Support your favorite streamer!",
       icons: settings?.logoUrl ? [{ rel: "icon", url: settings.logoUrl }] : [],
     };
