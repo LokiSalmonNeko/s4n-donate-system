@@ -34,7 +34,8 @@ export async function POST(request: Request) {
             },
         });
 
-        // 準備第三方支付參數 (以 ECPay 為例)
+
+        // 準備支付參數
         const merchantTradeDate = new Date().toLocaleString('zh-TW', {
             year: 'numeric',
             month: '2-digit',
@@ -45,30 +46,67 @@ export async function POST(request: Request) {
             hour12: false,
         }).replace(/\//g, '/');
 
-        const baseParams = {
-            MerchantID: process.env.ECPAY_MERCHANT_ID || '3002599', // 測試用 ID
-            MerchantTradeNo: donation.id.replace(/-/g, '').substring(0, 20), // ECPay 限制 20 碼
-            MerchantTradeDate: merchantTradeDate,
-            PaymentType: 'aio',
-            TotalAmount: donation.amount,
-            TradeDesc: 'Streamer Donation',
-            ItemName: `Donation from ${donorName}`,
-            ReturnURL: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/ecpay/callback`,
-            ChoosePayment: 'ALL',
-            EncryptType: 1,
-            CustomField1: donation.id, // 儲存完整 UUID
-        };
+        let actionUrl: string;
+        let paymentParams: any;
 
-        const checkMacValue = generateCheckMacValue(
-            baseParams,
-            process.env.ECPAY_HASH_KEY || 'spPjZn66i0OhqJsQ', // 測試用 Key
-            process.env.ECPAY_HASH_IV || 'hT5OJckN45isQTTs'  // 測試用 IV
-        );
+        if (paymentMethod === 'ECPAY') {
+            // ECPay 綠界科技
+            const baseParams = {
+                MerchantID: process.env.ECPAY_MERCHANT_ID || '3002599',
+                MerchantTradeNo: donation.id.replace(/-/g, '').substring(0, 20),
+                MerchantTradeDate: merchantTradeDate,
+                PaymentType: 'aio',
+                TotalAmount: donation.amount,
+                TradeDesc: 'Streamer Donation',
+                ItemName: `Donation from ${donorName}`,
+                ReturnURL: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/ecpay/callback`,
+                ChoosePayment: 'ALL',
+                EncryptType: 1,
+                CustomField1: donation.id,
+            };
+
+            const checkMacValue = generateCheckMacValue(
+                baseParams,
+                process.env.ECPAY_HASH_KEY || 'spPjZn66i0OhqJsQ',
+                process.env.ECPAY_HASH_IV || 'hT5OJckN45isQTTs'
+            );
+
+            paymentParams = { ...baseParams, CheckMacValue: checkMacValue };
+            actionUrl = 'https://payment.ecpay.com.tw/Cashier/AioCheckOut/V5'; // 正式環境
+
+        } else if (paymentMethod === 'OPAY') {
+            // O'Pay 歐付寶
+            const baseParams = {
+                MerchantID: process.env.OPAY_MERCHANT_ID || '3002599',
+                MerchantTradeNo: donation.id.replace(/-/g, '').substring(0, 20),
+                MerchantTradeDate: merchantTradeDate,
+                PaymentType: 'aio',
+                TotalAmount: donation.amount,
+                TradeDesc: 'Streamer Donation',
+                ItemName: `Donation from ${donorName}`,
+                ReturnURL: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/opay/callback`,
+                ChoosePayment: 'ALL',
+                EncryptType: 1,
+                CustomField1: donation.id,
+            };
+
+            const checkMacValue = generateCheckMacValue(
+                baseParams,
+                process.env.OPAY_HASH_KEY || 'spPjZn66i0OhqJsQ',
+                process.env.OPAY_HASH_IV || 'hT5OJckN45isQTTs'
+            );
+
+            paymentParams = { ...baseParams, CheckMacValue: checkMacValue };
+            actionUrl = 'https://payment.opay.tw/Cashier/AioCheckOut/V5'; // 正式環境
+
+        } else {
+            return NextResponse.json({ error: 'Invalid payment method' }, { status: 400 });
+        }
 
         return NextResponse.json({
             donationId: donation.id,
-            paymentParams: { ...baseParams, CheckMacValue: checkMacValue },
-            actionUrl: 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5', // 測試環境 URL
+            paymentParams,
+            actionUrl,
         });
 
     } catch (error) {

@@ -93,7 +93,7 @@ export default function HomePage() {
 
   if (!enableEcpay && !enableOpay) {
     return (
-      <div className="ts-center" style={{ marginTop: '20vh' }}>
+      <div className="ts-container is-narrow is-center-aligned" style={{ marginTop: '20vh' }}>
         <div className="ts-header is-icon is-heavy is-big">
           <span className="ts-icon is-circle-exclamation-icon"></span>
           目前不開放贊助

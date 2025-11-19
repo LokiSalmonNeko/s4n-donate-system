@@ -1,6 +1,8 @@
 import { NextApiRequest } from 'next';
 import { NextApiResponseServerIO } from './io';
 
+import { prisma } from '@/lib/prisma';
+
 export default async function handler(req: NextApiRequest, res: NextApiResponseServerIO) {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
@@ -11,6 +13,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponseS
         if (!io) {
             return res.status(500).json({ error: 'Socket.io not initialized' });
         }
+
+        // 取得目前的設定
+        const settings = await prisma.alertSettings.findFirst();
+        const template = settings?.messageTemplate || '{name} 贊助了 ${amount}';
 
         const testDonation = {
             id: 'test-' + Date.now(),

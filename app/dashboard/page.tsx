@@ -15,6 +15,9 @@ export default function DashboardPage() {
         enableEcpay: true,
         enableOpay: true,
         messageTemplate: '{name} 贊助了 ${amount}',
+        textColor: '#1a1a1a',
+        amountColor: '#ff6b6b',
+        fontSize: 32,
     });
     const [donations, setDonations] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -171,6 +174,56 @@ export default function DashboardPage() {
                                                 <option value="sans-serif">無襯線體 (Sans-serif)</option>
                                                 <option value="serif">襯線體 (Serif)</option>
                                                 <option value="'Noto Sans TC', sans-serif">Noto Sans TC</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="column">
+                                        <label className="ts-text is-label">文字顏色</label>
+                                        <div className="ts-grid is-2-columns">
+                                            <div className="column">
+                                                <div className="ts-input is-fluid">
+                                                    <input
+                                                        type="color"
+                                                        value={settings.textColor || '#1a1a1a'}
+                                                        onChange={(e) => setSettings({ ...settings, textColor: e.target.value })}
+                                                    />
+                                                </div>
+                                                <div className="ts-text is-small is-secondary has-top-spaced-small">主要文字</div>
+                                            </div>
+                                            <div className="column">
+                                                <div className="ts-input is-fluid">
+                                                    <input
+                                                        type="color"
+                                                        value={settings.amountColor || '#ff6b6b'}
+                                                        onChange={(e) => setSettings({ ...settings, amountColor: e.target.value })}
+                                                    />
+                                                </div>
+                                                <div className="ts-text is-small is-secondary has-top-spaced-small">金額強調</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="column">
+                                        <label className="ts-text is-label">文字大小 (px)</label>
+                                        <div className="ts-input is-fluid">
+                                            <input
+                                                type="number"
+                                                value={settings.fontSize || 32}
+                                                onChange={(e) => setSettings({ ...settings, fontSize: Number(e.target.value) })}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="column">
+                                        <label className="ts-text is-label">動畫效果</label>
+                                        <div className="ts-select is-fluid">
+                                            <select
+                                                value={settings.animationType || 'fade'}
+                                                onChange={(e) => setSettings({ ...settings, animationType: e.target.value })}
+                                            >
+                                                <option value="fade">淡入淡出 (Fade)</option>
+                                                <option value="slide-up">向上滑動 (Slide Up)</option>
+                                                <option value="slide-down">向下滑動 (Slide Down)</option>
+                                                <option value="zoom">縮放 (Zoom)</option>
+                                                <option value="bounce">彈跳 (Bounce)</option>
                                             </select>
                                         </div>
                                     </div>

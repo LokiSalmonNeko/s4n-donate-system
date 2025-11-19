@@ -10,6 +10,9 @@ interface AlertSettings {
     duration: number;
     animationType: string;
     messageTemplate?: string;
+    textColor?: string;
+    amountColor?: string;
+    fontSize?: number;
 }
 
 interface Donation {
@@ -88,19 +91,33 @@ export default function OBSPage() {
 
     if (!settings) return null;
 
+    // Animation classes
+    const getAnimationClass = () => {
+        const base = 'transition-all duration-500 transform';
+        if (!isVisible) return `${base} opacity-0 scale-95 translate-y-4`;
+
+        switch (settings.animationType) {
+            case 'slide-up': return `${base} opacity-100 translate-y-0`;
+            case 'slide-down': return `${base} opacity-100 translate-y-0`;
+            case 'zoom': return `${base} opacity-100 scale-100`;
+            case 'bounce': return `${base} opacity-100 animate-bounce`;
+            case 'fade':
+            default: return `${base} opacity-100 scale-100`;
+        }
+    };
+
     return (
         <div className="min-h-screen flex items-center justify-center overflow-hidden bg-transparent">
             {currentAlert && (
                 <div
-                    className={`transition-opacity duration-500 transform ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-                        } flex flex-col items-center text-center space-y-4 max-w-2xl`}
+                    className={`${getAnimationClass()} flex flex-col items-center text-center space-y-4 max-w-2xl`}
                     style={{ fontFamily: settings.fontFamily }}
                 >
                     {settings.imageUrl && (
                         <img
                             src={settings.imageUrl}
                             alt="Alert Image"
-                            className="max-w-xs max-h-xs object-contain animate-bounce-slow"
+                            className="max-w-xs max-h-xs object-contain"
                         />
                     )}
 
@@ -108,12 +125,18 @@ export default function OBSPage() {
                         {/* Decorative elements */}
                         <div className="absolute top-0 left-0 w-full h-2 bg-[var(--color-primary)]"></div>
 
-                        <h1 className="text-4xl font-black text-[var(--color-primary)] mb-2 drop-shadow-sm">
+                        <h1
+                            className="font-black mb-2 drop-shadow-sm"
+                            style={{
+                                color: settings.textColor || 'var(--color-primary)',
+                                fontSize: `${settings.fontSize || 32}px`
+                            }}
+                        >
                             {(settings.messageTemplate || '{name} 贊助了 ${amount}')
                                 .replace('{name}', currentAlert.donorName)
                                 .replace('{amount}', currentAlert.amount.toString())
                                 .split('$').map((part: string, i: number) => (
-                                    i === 0 ? part : <span key={i} className="text-[var(--color-accent)] text-3xl">${part}</span>
+                                    i === 0 ? part : <span key={i} style={{ color: settings.amountColor || 'var(--color-accent)', fontSize: '1.2em' }}>${part}</span>
                                 ))
                             }
                         </h1>

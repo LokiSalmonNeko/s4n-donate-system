@@ -40,7 +40,12 @@ model AlertSettings {
   soundUrl      String?  // 音效 URL
   fontFamily    String   @default("sans-serif") // 字型
   duration      Int      @default(5000) // 顯示時間 (毫秒)
-  animationType String   @default("fade") // 動畫類型
+  animationType String   @default("fade") // 動畫類型: fade, slide-up, slide-down, zoom, bounce
+  
+  // 文字樣式設定
+  textColor     String   @default("#1a1a1a") // 主要文字顏色
+  amountColor   String   @default("#ff6b6b") // 金額強調顏色
+  fontSize      Int      @default(32) // 文字大小 (px)
   
   // 網站自訂設定
   bannerUrl     String?  // 贊助頁面 Banner 圖片連結
