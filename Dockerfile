@@ -56,4 +56,5 @@ ENV PORT 3000
 # set hostname to localhost
 ENV HOSTNAME "0.0.0.0"
 
-CMD ["node", "server.js"]
+# Run prisma db push to ensure schema is up to date, then start the app
+CMD npx prisma db push && node server.js

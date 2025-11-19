@@ -21,8 +21,8 @@ export default function RootLayout({
   return (
     <html lang="zh-TW">
       <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/5.0.0/tocas.min.css" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tocas/5.0.0/tocas.min.js" async></script>
+        <link rel="stylesheet" href="https://unpkg.com/tocas@5.0.0/dist/tocas.min.css" />
+        <script src="https://unpkg.com/tocas@5.0.0/dist/tocas.min.js" async></script>
       </head>
       <body className={`${notoSansTC.variable} antialiased`}>
         {children}
