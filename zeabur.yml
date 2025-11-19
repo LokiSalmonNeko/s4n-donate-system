@@ -42,6 +42,12 @@ spec:
       key: ADMIN_PASSWORD
       name: Admin Password
       description: 後台管理員密碼
+    - type: PASSWORD
+      key: POSTGRES_PASSWORD
+      name: Database Password
+      description: 資料庫密碼 (自動生成)
+      readonly: true
+      generator: PASSWORD
   readme: |-
     # S4N Donate System
     這是一個開源的實況主贊助平台，支援 ECPay (綠界) 和 O'Pay (歐付寶) 金流，並提供 OBS 即時通知功能。
@@ -69,7 +75,7 @@ spec:
             type: HTTP
         env:
           DATABASE_URL:
-            default: ${POSTGRES_URL}
+            default: postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/postgres
           ECPAY_MERCHANT_ID:
             default: ${ECPAY_MERCHANT_ID}
           ECPAY_HASH_KEY:
@@ -100,4 +106,4 @@ spec:
             type: TCP
         env:
           POSTGRES_PASSWORD:
-            default: ${PASSWORD}
+            default: ${POSTGRES_PASSWORD}
