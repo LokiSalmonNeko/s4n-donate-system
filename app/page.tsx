@@ -106,15 +106,7 @@ export default function HomePage() {
     );
   }
 
-  // Helper to map alignment to Tocas UI class or style
-  const getAlignClass = (align?: string) => {
-    switch (align) {
-      case 'left': return 'is-start-aligned';
-      case 'right': return 'is-end-aligned';
-      case 'center':
-      default: return 'is-center-aligned';
-    }
-  };
+
 
   return (
     <div>
@@ -131,10 +123,10 @@ export default function HomePage() {
             </div>
           )}
 
-          <div className={`ts-content ${getAlignClass(settings.siteNameAlign)}`}>
+          <div className="ts-content" style={{ textAlign: settings.siteNameAlign || 'center' }}>
             <div className="ts-header is-heavy">{settings.siteName || 'S4N Donate'}</div>
           </div>
-          <div className={`ts-content ${getAlignClass(settings.sloganAlign)}`}>
+          <div className="ts-content" style={{ textAlign: settings.sloganAlign || 'center' }}>
             <div className="ts-text is-secondary">{settings.slogan || '您的支持是我們最大的動力！'}</div>
           </div>
 
