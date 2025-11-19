@@ -7,7 +7,6 @@ interface Settings {
   bannerUrl?: string;
   logoUrl?: string;
   siteName?: string;
-  slogan?: string;
   enableEcpay?: boolean;
   enableOpay?: boolean;
 }
@@ -107,13 +106,18 @@ export default function HomePage() {
   return (
     <div>
       {/* Banner */}
-      <div className="ts-container is-narrow has-top-spaced-large">
+      {settings.bannerUrl && (
+        <div style={{
+          width: '100%',
+          height: '200px',
+          backgroundImage: `url(${settings.bannerUrl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}></div>
+      )}
+
+      <div className={`ts-container is-narrow ${settings.bannerUrl ? 'has-top-spaced' : 'has-top-spaced-large'}`}>
         <div className="ts-box">
-          {settings.bannerUrl && (
-            <div className="ts-image is-fluid">
-              <img src={settings.bannerUrl} alt="Banner" style={{ width: '100%', display: 'block' }} />
-            </div>
-          )}
           <div className="ts-content is-center-aligned">
             {settings.logoUrl && (
               <div className="ts-image is-tiny is-circular has-bottom-spaced">
@@ -121,7 +125,7 @@ export default function HomePage() {
               </div>
             )}
             <div className="ts-header is-heavy">{settings.siteName || '支持實況主'}</div>
-            <div className="ts-text is-secondary">{settings.slogan || '您的支持是我們最大的動力！'}</div>
+            <div className="ts-text is-secondary">您的支持是我們最大的動力！</div>
           </div>
 
           <div className="ts-divider"></div>
