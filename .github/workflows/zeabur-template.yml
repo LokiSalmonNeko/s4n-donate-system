@@ -1,0 +1,25 @@
+name: Zeabur Template Update
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "zeabur.yml"
+  workflow_dispatch:
+
+jobs:
+  update-template:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Update Zeabur Template
+        env:
+          ZEABUR_TOKEN: ${{ secrets.ZEABUR_TOKEN }}
+        run: npx zeabur@latest template update -c PZ7FR9 -f zeabur.yml
