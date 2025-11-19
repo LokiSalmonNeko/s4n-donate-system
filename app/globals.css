@@ -1,26 +1,61 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Modern Japanese Color Palette */
+  --color-primary: #FF7F7F;
+  /* Sakura Pink */
+  --color-secondary: #87CEEB;
+  /* Sky Blue */
+  --color-accent: #FFD700;
+  /* Gold */
+  --color-background: #FDFDFD;
+  /* Off-white */
+  --color-surface: #FFFFFF;
+  /* Pure White */
+  --color-text: #333333;
+  /* Dark Gray */
+  --color-text-light: #666666;
+  /* Medium Gray */
+  --color-border: #E0E0E0;
+  /* Light Gray */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-sans: 'Noto Sans TC', sans-serif;
+  --font-serif: 'Noto Serif TC', serif;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-md font-medium transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-[var(--color-primary)] text-white hover:opacity-90 shadow-md;
+  }
+
+  .btn-secondary {
+    @apply bg-[var(--color-secondary)] text-white hover:opacity-90 shadow-md;
+  }
+
+  .card {
+    @apply bg-[var(--color-surface)] rounded-lg shadow-md p-6 border border-[var(--color-border)];
+  }
+
+  .input {
+    @apply w-full px-4 py-2 rounded-md border border-[var(--color-border)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all;
+  }
 }

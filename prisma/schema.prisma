@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 使用者 (管理員/實況主)
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String   // 加密後的密碼
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 贊助紀錄
+model Donation {
+  id            String   @id @default(uuid())
+  amount        Int      // 金額
+  message       String?  // 留言
+  donorName     String   // 贊助者暱稱
+  status        String   // PENDING, SUCCESS, FAILED
+  paymentMethod String   // ECPAY, OPAY
+  paymentId     String?  // 第三方支付的訂單編號
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// 通知設定
+model AlertSettings {
+  id            String   @id @default(uuid())
+  imageUrl      String?  // 圖片 URL
+  soundUrl      String?  // 音效 URL
+  fontFamily    String   @default("sans-serif") // 字型
+  duration      Int      @default(5000) // 顯示時間 (毫秒)
+  animationType String   @default("fade") // 動畫類型
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

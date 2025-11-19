@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# S4N Donate System (S4N 贊助系統)
 
-## Getting Started
+這是一個開源的實況主贊助平台，支援 ECPay (綠界) 和 O'Pay (歐付寶) 金流，並提供 OBS 即時通知功能。
 
-First, run the development server:
+[![Deployed on Zeabur](https://zeabur.com/deployed-on-zeabur-dark.svg)](https://zeabur.com/referral?referralCode=LokiSalmonNeko&utm_source=LokiSalmonNeko&utm_campaign=oss)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 功能特色
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **公開贊助頁面**：觀眾可以輸入暱稱、金額、留言並選擇支付方式。
+- **實況主後台**：查看最近贊助紀錄，設定通知樣式 (圖片、音效、字型)。
+- **OBS 通知**：專屬的 Browser Source 網址，贊助成功後即時顯示動畫與播放音效。
+- **現代化日系 UI**：採用柔和色調與 Noto Sans TC 字型。
+- **Docker 支援**：內建 Docker Compose 配置，輕鬆部署。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 快速部署 (Zeabur)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+本專案支援透過 Zeabur 一鍵部署。
 
-## Learn More
+1. Fork 本專案到您的 GitHub 帳號。
+2. 點擊上方的 "Deploy on Zeabur" 按鈕 (或前往 [Zeabur](https://zeabur.com) 新增服務)。
+3. 選擇您的 GitHub 儲存庫。
+4. Zeabur 會自動偵測 Docker 配置並開始部署。
+5. 在 Zeabur 的 "Variables" (環境變數) 設定中，填入以下變數：
+    - `DATABASE_URL`: (Zeabur 會自動提供 PostgreSQL 服務，通常不需要手動設定，若有需要請填入)
+    - `ECPAY_MERCHANT_ID`: 您的綠界商店代號
+    - `ECPAY_HASH_KEY`: 您的綠界 HashKey
+    - `ECPAY_HASH_IV`: 您的綠界 HashIV
+    - `OPAY_MERCHANT_ID`: 您的歐付寶商店代號
+    - `OPAY_HASH_KEY`: 您的歐付寶 HashKey
+    - `OPAY_HASH_IV`: 您的歐付寶 HashIV
+    - `NEXT_PUBLIC_BASE_URL`: 您的 Zeabur 應用程式網址 (例如 `https://your-app.zeabur.app`)
 
-To learn more about Next.js, take a look at the following resources:
+## 本地開發
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. 安裝依賴：
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. 啟動資料庫 (Docker)：
+   ```bash
+   docker-compose up -d db
+   ```
 
-## Deploy on Vercel
+3. 同步資料庫 Schema：
+   ```bash
+   npx prisma db push
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. 啟動開發伺服器：
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 相關連結
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Zeabur Documentation](https://docs.zeabur.com)
