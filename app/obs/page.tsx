@@ -13,6 +13,7 @@ interface AlertSettings {
     textColor?: string;
     amountColor?: string;
     fontSize?: number;
+    messageFontSize?: number;
     animationDuration?: number;
     backgroundColor?: string;
     borderColor?: string;
@@ -253,7 +254,7 @@ export default function OBSPage() {
                         {currentAlert.message && (
                             <p
                                 style={{
-                                    fontSize: '1.25rem',
+                                    fontSize: settings.messageFontSize ? `${settings.messageFontSize}px` : '24px',
                                     fontWeight: 500,
                                     wordBreak: 'break-word',
                                     maxWidth: '32rem',

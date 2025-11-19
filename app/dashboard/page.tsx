@@ -18,6 +18,7 @@ export default function DashboardPage() {
         textColor: '#1a1a1a',
         amountColor: '#ff6b6b',
         fontSize: 32,
+        messageFontSize: 24,
         animationDuration: 1000,
         backgroundColor: '#ffffff',
         borderColor: '#000000',
@@ -305,12 +306,22 @@ export default function DashboardPage() {
                                 </div>
                             </div>
                             <div className="column">
-                                <label className="ts-text is-label">文字大小 (px)</label>
+                                <label className="ts-text is-label">主要文字大小 (px)</label>
                                 <div className="ts-input is-fluid">
                                     <input
                                         type="number"
                                         value={settings.fontSize || 32}
-                                        onChange={(e) => setSettings({ ...settings, fontSize: Number(e.target.value) })}
+                                        onChange={(e) => setSettings({ ...settings, fontSize: parseInt(e.target.value) })}
+                                    />
+                                </div>
+                            </div>
+                            <div className="column">
+                                <label className="ts-text is-label">留言文字大小 (px)</label>
+                                <div className="ts-input is-fluid">
+                                    <input
+                                        type="number"
+                                        value={settings.messageFontSize || 24}
+                                        onChange={(e) => setSettings({ ...settings, messageFontSize: parseInt(e.target.value) })}
                                     />
                                 </div>
                             </div>

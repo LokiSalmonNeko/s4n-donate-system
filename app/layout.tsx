@@ -10,6 +10,8 @@ const notoSansTC = Noto_Sans_TC({
 
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const settings = await prisma.alertSettings.findFirst();

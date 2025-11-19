@@ -43,12 +43,11 @@ model AlertSettings {
   animationType String   @default("fade") // 動畫類型: fade, slide-up, slide-down, zoom, bounce
   
   // 文字樣式設定
-  textColor     String   @default("#1a1a1a") // 主要文字顏色
-  amountColor   String   @default("#ff6b6b") // 金額強調顏色
-  fontSize      Int      @default(32) // 文字大小 (px)
-  
-  // 進階樣式設定
-  animationDuration Int      @default(1000) // 動畫持續時間 (毫秒)
+  textColor     String   @default("#000000") // 文字顏色
+  amountColor   String   @default("#ff0000") // 金額顏色
+  fontSize      Int      @default(32)        // 主要文字大小 (px)
+  messageFontSize Int    @default(24)        // 留言文字大小 (px)
+  animationDuration Int  @default(1000)      // 動畫時間 (ms)
   backgroundColor   String   @default("#ffffff") // 背景顏色
   borderColor       String   @default("#000000") // 邊框顏色
   
