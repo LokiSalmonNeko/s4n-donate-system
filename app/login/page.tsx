@@ -37,61 +37,60 @@ export default function LoginPage() {
 
     return (
         <div className="ts-center">
-            <div className="ts-container is-narrow" style={{ marginTop: '10vh' }}>
-                <div className="ts-header is-center is-heavy is-big is-icon">
-                    <span className="ts-icon is-user-circle-icon"></span>
-                    後台登入
+            <div className="ts-container is-narrow has-vertically-spaced-large">
+                <div className="ts-header is-center-aligned is-heavy is-icon">
+                    <span className="ts-icon is-user-icon"></span>
+                    管理員登入
                 </div>
-                <div className="ts-space is-large"></div>
+                <div className="ts-text is-center-aligned is-secondary has-bottom-spaced-large">
+                    請輸入管理員帳號密碼以進入後台
+                </div>
 
-                <form className="ts-box" onSubmit={handleSubmit}>
-                    <div className="ts-content is-dense">
-                        <div className="ts-grid is-relaxed">
-                            <div className="column is-16-wide">
-                                <div className="ts-text is-label">帳號</div>
-                                <div className="ts-input is-fluid">
+                <form onSubmit={handleSubmit} className="ts-box is-segment is-elevated">
+                    <div className="ts-content is-padded-large">
+                        <div className="ts-grid is-stacked">
+                            <div className="column">
+                                <label className="ts-text is-label">帳號</label>
+                                <div className="ts-input is-start-icon is-fluid">
+                                    <span className="ts-icon is-user-icon"></span>
                                     <input
                                         type="text"
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
                                         placeholder="Admin Username"
-                                        required
                                     />
                                 </div>
                             </div>
-                            <div className="column is-16-wide">
-                                <div className="ts-text is-label">密碼</div>
-                                <div className="ts-input is-fluid">
+                            <div className="column">
+                                <label className="ts-text is-label">密碼</label>
+                                <div className="ts-input is-start-icon is-fluid">
+                                    <span className="ts-icon is-lock-icon"></span>
                                     <input
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        placeholder="Admin Password"
-                                        required
+                                        placeholder="Password"
                                     />
                                 </div>
                             </div>
-
                             {error && (
-                                <div className="column is-16-wide">
+                                <div className="column">
                                     <div className="ts-notice is-negative">
                                         <div className="content">{error}</div>
                                     </div>
                                 </div>
                             )}
-
-                            <div className="column is-16-wide">
-                                <button
-                                    className={`ts-button is-fluid ${loading ? 'is-loading' : ''}`}
-                                    type="submit"
-                                >
-                                    登入
-                                </button>
-                            </div>
+                            <button
+                                className={`ts-button is-fluid ${loading ? 'is-loading' : ''}`}
+                                type="submit"
+                            >
+                                登入
+                            </button>
                         </div>
                     </div>
-                </form>
             </div>
-        </div>
+        </form>
+            </div >
+        </div >
     );
 }

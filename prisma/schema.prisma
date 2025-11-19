@@ -47,6 +47,16 @@ model AlertSettings {
   amountColor   String   @default("#ff6b6b") // 金額強調顏色
   fontSize      Int      @default(32) // 文字大小 (px)
   
+  // 進階樣式設定
+  animationDuration Int      @default(1000) // 動畫持續時間 (毫秒)
+  backgroundColor   String   @default("#ffffff") // 背景顏色
+  borderColor       String   @default("#000000") // 邊框顏色
+  
+  // 位置與大小設定
+  alertWidth        Int      @default(600) // 通知寬度 (px)
+  verticalAlign     String   @default("center") // 垂直對齊 (start, center, end)
+  horizontalAlign   String   @default("center") // 水平對齊 (start, center, end)
+  
   // 網站自訂設定
   bannerUrl     String?  // 贊助頁面 Banner 圖片連結
   logoUrl       String?  // 標籤頁 Logo 圖片連結

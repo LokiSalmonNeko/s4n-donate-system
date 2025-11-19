@@ -13,6 +13,12 @@ interface AlertSettings {
     textColor?: string;
     amountColor?: string;
     fontSize?: number;
+    animationDuration?: number;
+    backgroundColor?: string;
+    borderColor?: string;
+    alertWidth?: number;
+    verticalAlign?: string;
+    horizontalAlign?: string;
 }
 
 interface Donation {
@@ -85,7 +91,7 @@ export default function OBSPage() {
             setIsVisible(false);
             setTimeout(() => {
                 setCurrentAlert(null);
-            }, 500); // Wait for fade out animation
+            }, settings?.animationDuration || 1000); // Wait for fade out animation
         }, settings?.duration || 5000);
     };
 
@@ -93,7 +99,7 @@ export default function OBSPage() {
 
     // Animation classes
     const getAnimationClass = () => {
-        const base = 'transition-all duration-500 transform';
+        const base = 'transition-all transform';
         if (!isVisible) return `${base} opacity-0 scale-95 translate-y-4`;
 
         switch (settings.animationType) {
@@ -106,12 +112,44 @@ export default function OBSPage() {
         }
     };
 
+    // Positioning styles
+    const getContainerStyle = () => {
+        const style: React.CSSProperties = {
+            display: 'flex',
+            width: '100vw',
+            height: '100vh',
+            padding: '2rem',
+            boxSizing: 'border-box',
+        };
+
+        switch (settings.verticalAlign) {
+            case 'start': style.alignItems = 'flex-start'; break;
+            case 'end': style.alignItems = 'flex-end'; break;
+            case 'center':
+            default: style.alignItems = 'center'; break;
+        }
+
+        switch (settings.horizontalAlign) {
+            case 'start': style.justifyContent = 'flex-start'; break;
+            case 'end': style.justifyContent = 'flex-end'; break;
+            case 'center':
+            default: style.justifyContent = 'center'; break;
+        }
+
+        return style;
+    };
+
     return (
-        <div className="min-h-screen flex items-center justify-center overflow-hidden bg-transparent">
+        <div className="min-h-screen overflow-hidden bg-transparent" style={getContainerStyle()}>
             {currentAlert && (
                 <div
-                    className={`${getAnimationClass()} flex flex-col items-center text-center space-y-4 max-w-2xl`}
-                    style={{ fontFamily: settings.fontFamily }}
+                    className={`${getAnimationClass()} flex flex-col items-center text-center space-y-4`}
+                    style={{
+                        fontFamily: settings.fontFamily,
+                        transitionDuration: `${settings.animationDuration || 1000}ms`,
+                        width: settings.alertWidth ? `${settings.alertWidth}px` : '600px',
+                        maxWidth: '100%'
+                    }}
                 >
                     {settings.imageUrl && (
                         <img
@@ -121,9 +159,18 @@ export default function OBSPage() {
                         />
                     )}
 
-                    <div className="bg-white/90 p-6 rounded-xl shadow-2xl border-4 border-[var(--color-primary)] relative overflow-hidden">
+                    <div
+                        className="p-6 rounded-xl shadow-2xl border-4 relative overflow-hidden w-full"
+                        style={{
+                            backgroundColor: settings.backgroundColor || '#ffffff',
+                            borderColor: settings.borderColor || 'var(--color-primary)'
+                        }}
+                    >
                         {/* Decorative elements */}
-                        <div className="absolute top-0 left-0 w-full h-2 bg-[var(--color-primary)]"></div>
+                        <div
+                            className="absolute top-0 left-0 w-full h-2"
+                            style={{ backgroundColor: settings.borderColor || 'var(--color-primary)' }}
+                        ></div>
 
                         <h1
                             className="font-black mb-2 drop-shadow-sm"
@@ -141,7 +188,10 @@ export default function OBSPage() {
                             }
                         </h1>
                         {currentAlert.message && (
-                            <p className="text-xl text-[var(--color-text-light)] font-medium break-words max-w-lg leading-relaxed">
+                            <p
+                                className="text-xl font-medium break-words max-w-lg leading-relaxed mx-auto"
+                                style={{ color: settings.textColor || 'var(--color-text-light)' }}
+                            >
                                 {currentAlert.message}
                             </p>
                         )}

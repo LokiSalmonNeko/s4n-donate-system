@@ -17,6 +17,8 @@ export async function POST(request: Request) {
         const {
             imageUrl, soundUrl, fontFamily, duration, animationType,
             textColor, amountColor, fontSize,
+            animationDuration, backgroundColor, borderColor,
+            alertWidth, verticalAlign, horizontalAlign,
             bannerUrl, logoUrl, siteName, enableEcpay, enableOpay, messageTemplate
         } = body;
 
@@ -30,6 +32,8 @@ export async function POST(request: Request) {
                 data: {
                     imageUrl, soundUrl, fontFamily, duration, animationType,
                     textColor, amountColor, fontSize,
+                    animationDuration, backgroundColor, borderColor,
+                    alertWidth, verticalAlign, horizontalAlign,
                     bannerUrl, logoUrl, siteName, enableEcpay, enableOpay, messageTemplate
                 },
             });
@@ -38,6 +42,8 @@ export async function POST(request: Request) {
                 data: {
                     imageUrl, soundUrl, fontFamily, duration, animationType,
                     textColor, amountColor, fontSize,
+                    animationDuration, backgroundColor, borderColor,
+                    alertWidth, verticalAlign, horizontalAlign,
                     bannerUrl, logoUrl, siteName, enableEcpay, enableOpay, messageTemplate
                 },
             });
