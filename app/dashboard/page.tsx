@@ -9,6 +9,11 @@ export default function DashboardPage() {
         fontFamily: 'sans-serif',
         duration: 5000,
         animationType: 'fade',
+        bannerUrl: '',
+        logoUrl: '',
+        siteName: 'S4N Donate',
+        enableEcpay: true,
+        enableOpay: true,
     });
     const [donations, setDonations] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -165,7 +170,7 @@ export default function DashboardPage() {
                                                 </div>
                                                 <div className="column">
                                                     <span className={`ts-badge ${donation.status === 'SUCCESS' ? 'is-positive' :
-                                                            donation.status === 'PENDING' ? 'is-warning' : 'is-negative'
+                                                        donation.status === 'PENDING' ? 'is-warning' : 'is-negative'
                                                         }`}>
                                                         {donation.status}
                                                     </span>

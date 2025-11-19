@@ -14,7 +14,10 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { imageUrl, soundUrl, fontFamily, duration, animationType } = body;
+        const {
+            imageUrl, soundUrl, fontFamily, duration, animationType,
+            bannerUrl, logoUrl, siteName, enableEcpay, enableOpay
+        } = body;
 
         // 檢查是否已有設定
         const existing = await prisma.alertSettings.findFirst();
@@ -23,11 +26,17 @@ export async function POST(request: Request) {
         if (existing) {
             settings = await prisma.alertSettings.update({
                 where: { id: existing.id },
-                data: { imageUrl, soundUrl, fontFamily, duration, animationType },
+                data: {
+                    imageUrl, soundUrl, fontFamily, duration, animationType,
+                    bannerUrl, logoUrl, siteName, enableEcpay, enableOpay
+                },
             });
         } else {
             settings = await prisma.alertSettings.create({
-                data: { imageUrl, soundUrl, fontFamily, duration, animationType },
+                data: {
+                    imageUrl, soundUrl, fontFamily, duration, animationType,
+                    bannerUrl, logoUrl, siteName, enableEcpay, enableOpay
+                },
             });
         }
 

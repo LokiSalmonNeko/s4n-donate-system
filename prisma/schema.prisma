@@ -33,6 +33,7 @@ model Donation {
 }
 
 // 通知設定
+// 通知與網站設定
 model AlertSettings {
   id            String   @id @default(uuid())
   imageUrl      String?  // 圖片 URL
@@ -40,6 +41,16 @@ model AlertSettings {
   fontFamily    String   @default("sans-serif") // 字型
   duration      Int      @default(5000) // 顯示時間 (毫秒)
   animationType String   @default("fade") // 動畫類型
+  
+  // 網站自訂設定
+  bannerUrl     String?  // 贊助頁面 Banner 圖片連結
+  logoUrl       String?  // 標籤頁 Logo 圖片連結
+  siteName      String   @default("S4N Donate") // 標籤頁網站名稱
+  
+  // 金流開關
+  enableEcpay   Boolean  @default(true) // 啟用綠界
+  enableOpay    Boolean  @default(true) // 啟用歐付寶
+  
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
