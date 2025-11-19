@@ -80,17 +80,18 @@ export default function LoginPage() {
                                     </div>
                                 </div>
                             )}
-                            <button
-                                className={`ts-button is-fluid ${loading ? 'is-loading' : ''}`}
-                                type="submit"
-                            >
-                                登入
-                            </button>
+                            <div className="column">
+                                <button
+                                    className={`ts-button is-fluid is-primary ${loading ? 'is-loading' : ''}`}
+                                    type="submit"
+                                >
+                                    登入
+                                </button>
+                            </div>
                         </div>
                     </div>
+                </form>
             </div>
-        </form>
-            </div >
-        </div >
+        </div>
     );
 }

@@ -58,3 +58,9 @@
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Zeabur Documentation](https://docs.zeabur.com)
 - [Tocas UI](https://tocas-ui.com/)
+
+## 授權
+
+本專案採用 [MIT License](LICENSE) 授權。
+
+詳細說明請參閱 [中文授權說明](LICENSE_zh_TW.md)。
