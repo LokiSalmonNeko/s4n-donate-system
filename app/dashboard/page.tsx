@@ -256,39 +256,204 @@ export default function DashboardPage() {
                                                 <option value="bounce">彈跳 (Bounce)</option>
                                             </select>
                                         </div>
-                                        <div className="ts-list is-separated">
-                                            {donations.map((donation: any) => (
-                                                <div key={donation.id} className="item">
-                                                    <div className="ts-grid is-middle-aligned">
-                                                        <div className="column is-fluid">
-                                                            <div className="ts-header is-heavy">{donation.donorName}</div>
-                                                            <div className="ts-text is-secondary is-small">贊助了 ${donation.amount}</div>
-                                                        </div>
-                                                        <div className="column">
-                                                            <span className={`ts-badge ${donation.status === 'SUCCESS' ? 'is-positive' :
-                                                                donation.status === 'PENDING' ? 'is-warning' : 'is-negative'
-                                                                }`}>
-                                                                {donation.status}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    {donation.message && (
-                                                        <div className="ts-quote is-secondary has-top-spaced-small">
-                                                            {donation.message}
-                                                        </div>
-                                                    )}
-                                                    <div className="ts-text is-tertiary is-small has-top-spaced-small">
-                                                        {new Date(donation.createdAt).toLocaleString('zh-TW')}
-                                                    </div>
-                                                </div>
-                                            ))}
+                                        <div className="ts-text is-small is-secondary has-top-spaced-small">類型</div>
+                                    </div>
+                                    <div className="column">
+                                        <div className="ts-input is-fluid">
+                                            <input
+                                                type="number"
+                                                value={settings.animationDuration || 1000}
+                                                onChange={(e) => setSettings({ ...settings, animationDuration: Number(e.target.value) })}
+                                                placeholder="1000"
+                                            />
                                         </div>
-                            )}
+                                        <div className="ts-text is-small is-secondary has-top-spaced-small">持續時間 (ms)</div>
                                     </div>
                                 </div>
                             </div>
-
+                            <div className="column">
+                                <label className="ts-text is-label">外觀樣式</label>
+                                <div className="ts-grid is-2-columns">
+                                    <div className="column">
+                                        <div className="ts-input is-fluid">
+                                            <input
+                                                type="color"
+                                                value={settings.backgroundColor || '#ffffff'}
+                                                onChange={(e) => setSettings({ ...settings, backgroundColor: e.target.value })}
+                                            />
+                                        </div>
+                                        <div className="ts-text is-small is-secondary has-top-spaced-small">背景顏色</div>
+                                    </div>
+                                    <div className="column">
+                                        <div className="ts-input is-fluid">
+                                            <input
+                                                type="color"
+                                                value={settings.borderColor || '#000000'}
+                                                onChange={(e) => setSettings({ ...settings, borderColor: e.target.value })}
+                                            />
+                                        </div>
+                                        <div className="ts-text is-small is-secondary has-top-spaced-small">邊框顏色</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="column">
+                                <label className="ts-text is-label">顯示時間 (毫秒)</label>
+                                <div className="ts-input is-fluid">
+                                    <input
+                                        type="number"
+                                        value={settings.duration}
+                                        onChange={(e) => setSettings({ ...settings, duration: Number(e.target.value) })}
+                                    />
+                                </div>
+                            </div>
+                            <div className="column">
+                                <label className="ts-text is-label">通知訊息模板</label>
+                                <div className="ts-input is-fluid">
+                                    <input
+                                        type="text"
+                                        value={settings.messageTemplate || ''}
+                                        onChange={(e) => setSettings({ ...settings, messageTemplate: e.target.value })}
+                                        placeholder="{name} 贊助了 ${amount}"
+                                    />
+                                </div>
+                                <div className="ts-text is-small is-secondary has-top-spaced-small">
+                                    可用變數: <code>{'{name}'}</code> (贊助者), <code>{'{amount}'}</code> (金額)
+                                </div>
+                            </div>
                         </div>
+                    )}
+
+                    {activeTab === 'layout' && (
+                        <div className="ts-grid is-stacked">
+                            <div className="column">
+                                <label className="ts-text is-label">通知寬度 (px)</label>
+                                <div className="ts-input is-fluid">
+                                    <input
+                                        type="number"
+                                        value={settings.alertWidth || 600}
+                                        onChange={(e) => setSettings({ ...settings, alertWidth: Number(e.target.value) })}
+                                        placeholder="600"
+                                    />
+                                </div>
+                            </div>
+                            <div className="column">
+                                <label className="ts-text is-label">垂直對齊</label>
+                                <div className="ts-select is-fluid">
+                                    <select
+                                        value={settings.verticalAlign || 'center'}
+                                        onChange={(e) => setSettings({ ...settings, verticalAlign: e.target.value })}
+                                    >
+                                        <option value="start">靠上 (Top)</option>
+                                        <option value="center">置中 (Center)</option>
+                                        <option value="end">靠下 (Bottom)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="column">
+                                <label className="ts-text is-label">水平對齊</label>
+                                <div className="ts-select is-fluid">
+                                    <select
+                                        value={settings.horizontalAlign || 'center'}
+                                        onChange={(e) => setSettings({ ...settings, horizontalAlign: e.target.value })}
+                                    >
+                                        <option value="start">靠左 (Left)</option>
+                                        <option value="center">置中 (Center)</option>
+                                        <option value="end">靠右 (Right)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {activeTab === 'preview' && (
+                        <div className="ts-grid is-stacked">
+                            <div className="column">
+                                <label className="ts-text is-label">OBS Browser Source URL</label>
+                                <div className="ts-input is-fluid is-action">
+                                    <input
+                                        type="text"
+                                        readOnly
+                                        value={typeof window !== 'undefined' ? `${window.location.origin}/obs` : '/obs'}
+                                    />
+                                    <button
+                                        className="ts-button is-icon"
+                                        type="button"
+                                        onClick={() => {
+                                            const url = typeof window !== 'undefined' ? `${window.location.origin}/obs` : '/obs';
+                                            navigator.clipboard.writeText(url);
+                                            alert('已複製連結');
+                                        }}
+                                    >
+                                        <span className="ts-icon is-copy-icon"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="column">
+                                <div className="ts-header is-heavy is-small has-bottom-spaced-small">預覽與測試</div>
+                                <div className="ts-box has-top-spaced-small">
+                                    <div className="ts-content is-center-aligned is-secondary" style={{ background: '#333', height: '300px', position: 'relative', overflow: 'hidden' }}>
+                                        <iframe
+                                            key={lastSaved}
+                                            src="/obs"
+                                            style={{ width: '100%', height: '100%', border: 'none', pointerEvents: 'none' }}
+                                            title="OBS Preview"
+                                        ></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="column">
+                                <button className="ts-button is-fluid is-outlined" onClick={handleTestAlert}>
+                                    發送測試通知
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            <div className="ts-header is-heavy has-top-spaced-large">最近贊助</div>
+            <div className="ts-box has-top-spaced">
+                <div className="ts-content is-dense">
+                    <div className="ts-grid is-middle-aligned">
+                        <div className="column is-fluid">
+                            <div className="ts-text is-secondary">顯示最近 10 筆贊助紀錄</div>
+                        </div>
+                        <div className="column">
+                            <button className="ts-button is-small is-icon is-outlined" onClick={fetchData}>
+                                <span className="ts-icon is-rotate-right-icon"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div className="ts-divider"></div>
+                {donations.length === 0 ? (
+                    <div className="ts-content is-center-aligned is-secondary is-padded-large">
+                        <div className="ts-icon is-face-sad-tear-icon is-header is-large"></div>
+                        <div className="ts-text has-top-spaced">尚無贊助紀錄</div>
+                    </div>
+                ) : (
+                    <table className="ts-table is-striped is-fullwidth">
+                        <thead>
+                            <tr>
+                                <th>時間</th>
+                                <th>贊助者</th>
+                                <th>金額</th>
+                                <th>訊息</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {donations.map((donation: any) => (
+                                <tr key={donation.id}>
+                                    <td>{new Date(donation.createdAt).toLocaleString()}</td>
+                                    <td>{donation.donorName}</td>
+                                    <td>${donation.amount}</td>
+                                    <td>{donation.message}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
+            </div>
         </div>
-                );
+    );
 }
