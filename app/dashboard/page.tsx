@@ -391,7 +391,7 @@ export default function DashboardPage() {
                             <div className="column">
                                 <div className="ts-header is-heavy is-small has-bottom-spaced-small">預覽與測試</div>
                                 <div className="ts-box has-top-spaced-small">
-                                    <div className="ts-content is-center-aligned is-secondary" style={{ background: '#333', height: '300px', position: 'relative', overflow: 'hidden' }}>
+                                    <div className="ts-content is-center-aligned is-secondary" style={{ background: '#333', aspectRatio: '16/9', position: 'relative', overflow: 'hidden' }}>
                                         <iframe
                                             key={lastSaved}
                                             src="/obs"

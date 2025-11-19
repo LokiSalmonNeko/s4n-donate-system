@@ -59,6 +59,13 @@
 - [Zeabur Documentation](https://docs.zeabur.com)
 - [Tocas UI](https://tocas-ui.com/)
 
+## 網站頁面說明
+
+- **首頁 (`/`)**: 系統首頁。
+- **管理後台 (`/dashboard`)**: 實況主或管理員使用的後台，可設定通知樣式、金流開關、查看贊助紀錄。
+- **OBS 瀏覽器來源 (`/obs`)**: 專為 OBS 設計的通知頁面，請將此網址加入 OBS 的瀏覽器來源。
+- **管理員登入 (`/login`)**: 後台登入頁面。
+
 ## 授權
 
 本專案採用 [MIT License](LICENSE) 授權。
