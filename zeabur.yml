@@ -1,0 +1,38 @@
+apiVersion: zeabur.com/v1
+kind: Template
+metadata:
+  name: S4N Donate System
+spec:
+  services:
+    - name: s4n-donate-system
+      template: PREBUILT
+      spec:
+        image: lokisalmonneko/s4n-donate-system:latest
+        env:
+          - name: DATABASE_URL
+            value: ${POSTGRES_URL}
+          - name: ECPAY_MERCHANT_ID
+            value: "2000132"
+          - name: ECPAY_HASH_KEY
+            value: "5294y06JbISpM5x9"
+          - name: ECPAY_HASH_IV
+            value: "v77hoKGq4kWxNNIS"
+          - name: OPAY_MERCHANT_ID
+            value: "2000132"
+          - name: OPAY_HASH_KEY
+            value: "5294y06JbISpM5x9"
+          - name: OPAY_HASH_IV
+            value: "v77hoKGq4kWxNNIS"
+          - name: NEXT_PUBLIC_BASE_URL
+            value: ${ZEABUR_WEB_URL}
+
+    - name: postgres
+      template: PREBUILT
+      spec:
+        image: postgres:15-alpine
+        ports:
+          - port: 5432
+            type: TCP
+        env:
+          - name: POSTGRES_PASSWORD
+            value: ${PASSWORD}
