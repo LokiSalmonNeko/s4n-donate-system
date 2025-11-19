@@ -36,11 +36,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-TW">
-      <head>
+      <body className={`${notoSansTC.variable}`}>
+        {/* Tocas UI */}
         <link rel="stylesheet" href="https://unpkg.com/tocas@5.0.0/dist/tocas.min.css" />
         <script src="https://unpkg.com/tocas@5.0.0/dist/tocas.min.js" async></script>
-      </head>
-      <body className={`${notoSansTC.variable}`}>
         {children}
       </body>
     </html>
