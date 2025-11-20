@@ -58,6 +58,7 @@ spec:
 
   services:
     - name: s4n-donate-system
+      icon: 
       template: PREBUILT
       domainKey: PUBLIC_DOMAIN
       spec:
@@ -90,6 +91,7 @@ spec:
             default: ${ADMIN_PASSWORD}
 
     - name: postgres
+      icon: https://raw.githubusercontent.com/zeabur/service-icons/main/marketplace/postgresql.svg
       template: PREBUILT
       spec:
         source:
