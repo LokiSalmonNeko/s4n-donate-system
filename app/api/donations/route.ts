@@ -46,6 +46,26 @@ export async function POST(request: Request) {
             hour12: false,
         }).replace(/\//g, '/');
 
+        // Generate MerchantTradeNo (20 chars max)
+        // Use a combination of timestamp and random string or part of UUID
+        // Since we need to find the donation by this ID later, we should save it.
+        // Let's use the donation ID's first 13 chars + random or just truncate UUID if it's unique enough?
+        // UUID is 36 chars. 
+        // Let's use: "SN" + timestamp(10) + random(8) ? No, max 20.
+        // Let's use: donation.id (UUID) without dashes is 32 chars. Too long.
+        // Let's use: timestamp (yyMMddHHmmss) 12 chars + 8 random chars.
+        // Or just use the one generated in the original code: donation.id.replace(/-/g, '').substring(0, 20)
+        // But we need to save THIS value to the DB to find it later since we can't pass CustomField1.
+
+        const merchantTradeNo = donation.id.replace(/-/g, '').substring(0, 20);
+
+        // Update donation with the generated MerchantTradeNo as paymentId (temporarily, until we get the real TradeNo from OPay/ECPay)
+        // Actually, for OPay we will use this to look it up.
+        await prisma.donation.update({
+            where: { id: donation.id },
+            data: { paymentId: merchantTradeNo }
+        });
+
         let actionUrl: string;
         let paymentParams: any;
 
@@ -53,7 +73,7 @@ export async function POST(request: Request) {
             // ECPay 綠界科技
             const baseParams = {
                 MerchantID: process.env.ECPAY_MERCHANT_ID || '3002599',
-                MerchantTradeNo: donation.id.replace(/-/g, '').substring(0, 20),
+                MerchantTradeNo: merchantTradeNo,
                 MerchantTradeDate: merchantTradeDate,
                 PaymentType: 'aio',
                 TotalAmount: donation.amount,
@@ -62,7 +82,7 @@ export async function POST(request: Request) {
                 ReturnURL: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/ecpay/callback`,
                 ChoosePayment: 'ALL',
                 EncryptType: 1,
-                CustomField1: donation.id,
+                CustomField1: donation.id, // ECPay supports CustomField1, keeping it.
             };
 
             const checkMacValue = generateCheckMacValue(
@@ -78,7 +98,7 @@ export async function POST(request: Request) {
             // O'Pay 歐付寶
             const baseParams = {
                 MerchantID: process.env.OPAY_MERCHANT_ID || '3002599',
-                MerchantTradeNo: donation.id.replace(/-/g, '').substring(0, 20),
+                MerchantTradeNo: merchantTradeNo,
                 MerchantTradeDate: merchantTradeDate,
                 PaymentType: 'aio',
                 TotalAmount: donation.amount,
@@ -87,7 +107,7 @@ export async function POST(request: Request) {
                 ReturnURL: `${process.env.NEXT_PUBLIC_BASE_URL}/api/payment/opay/callback`,
                 ChoosePayment: 'ALL',
                 EncryptType: 1,
-                CustomField1: donation.id,
+                // CustomField1 removed as it causes "Parameter Error"
             };
 
             const checkMacValue = generateCheckMacValue(

@@ -46,21 +46,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponseS
             return res.status(400).send('0|ErrorMessage');
         }
 
-        const donationId = data.CustomField1;
+        const merchantTradeNo = data.MerchantTradeNo;
         const rtnCode = data.RtnCode;
 
-        if (rtnCode === '1' && donationId) {
-            const donation = await prisma.donation.update({
-                where: { id: donationId },
-                data: {
-                    status: 'SUCCESS',
-                    paymentId: data.TradeNo,
-                },
+        if (rtnCode === '1' && merchantTradeNo) {
+            // Find donation by the MerchantTradeNo we saved in paymentId
+            const donation = await prisma.donation.findFirst({
+                where: { paymentId: merchantTradeNo }
             });
 
-            if (res.socket.server.io) {
-                res.socket.server.io.emit('new-donation', donation);
-                console.log('Emitted new-donation event (OPay):', donation.id);
+            if (donation) {
+                const updatedDonation = await prisma.donation.update({
+                    where: { id: donation.id },
+                    data: {
+                        status: 'SUCCESS',
+                        paymentId: data.TradeNo, // Update to the real O'Pay TradeNo
+                    },
+                });
+
+                if (res.socket.server.io) {
+                    res.socket.server.io.emit('new-donation', updatedDonation);
+                    console.log('Emitted new-donation event (OPay):', updatedDonation.id);
+                }
+            } else {
+                console.warn('OPay Callback: Donation not found for MerchantTradeNo:', merchantTradeNo);
             }
         }
 

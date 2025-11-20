@@ -15,10 +15,11 @@ export const dynamic = 'force-dynamic';
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const settings = await prisma.alertSettings.findFirst();
-    const icons = settings?.logoUrl ? {
-      icon: settings.logoUrl,
-      shortcut: settings.logoUrl,
-      apple: settings.logoUrl,
+    const logoUrl = settings?.logoUrl ? `${settings.logoUrl}?v=${Date.now()}` : null;
+    const icons = logoUrl ? {
+      icon: logoUrl,
+      shortcut: logoUrl,
+      apple: logoUrl,
     } : [];
 
     return {

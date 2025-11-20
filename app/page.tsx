@@ -112,10 +112,10 @@ export default function HomePage() {
     <div>
       <div className="ts-container is-narrow has-top-spaced-large">
         {/* Streamer Name & Slogan (Outside Box) */}
-        <div style={{ marginBottom: '1.5rem', textAlign: settings.siteNameAlign || 'center' }}>
+        <div style={{ marginBottom: '1.5rem', textAlign: 'left' }}>
           <div className="ts-header is-heavy is-big">{settings.siteName || 'S4N Donate'}</div>
         </div>
-        <div style={{ marginBottom: '2rem', textAlign: settings.sloganAlign || 'center' }}>
+        <div style={{ marginBottom: '2rem', textAlign: 'left' }}>
           <div className="ts-text is-secondary">{settings.slogan || '您的支持是我們最大的動力！'}</div>
         </div>
 
