@@ -524,6 +524,8 @@ export default function DashboardPage() {
                         <thead>
                             <tr>
                                 <th>時間</th>
+                                <th>來源</th>
+                                <th>狀態</th>
                                 <th>贊助者</th>
                                 <th>金額</th>
                                 <th>訊息</th>
@@ -533,6 +535,17 @@ export default function DashboardPage() {
                             {donations.map((donation: any) => (
                                 <tr key={donation.id}>
                                     <td>{new Date(donation.createdAt).toLocaleString()}</td>
+                                    <td>
+                                        {donation.paymentMethod === 'ECPAY' && <span className="ts-badge is-info">綠界</span>}
+                                        {donation.paymentMethod === 'OPAY' && <span className="ts-badge is-warning">歐付寶</span>}
+                                        {!['ECPAY', 'OPAY'].includes(donation.paymentMethod) && <span className="ts-badge">{donation.paymentMethod}</span>}
+                                    </td>
+                                    <td>
+                                        {donation.status === 'SUCCESS' && <span className="ts-badge is-success">成功</span>}
+                                        {donation.status === 'PENDING' && <span className="ts-badge is-secondary">待付款</span>}
+                                        {donation.status === 'FAILED' && <span className="ts-badge is-negative">失敗</span>}
+                                        {!['SUCCESS', 'PENDING', 'FAILED'].includes(donation.status) && <span className="ts-badge">{donation.status}</span>}
+                                    </td>
                                     <td>{donation.donorName}</td>
                                     <td>${donation.amount}</td>
                                     <td>{donation.message}</td>
