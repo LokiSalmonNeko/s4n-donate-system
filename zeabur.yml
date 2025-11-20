@@ -5,6 +5,7 @@ metadata:
 spec:
   description: Open source streamer sponsorship platform with ECPay/O'Pay support and OBS alerts.
   coverImage: 
+  icon: https://raw.githubusercontent.com/LokiSalmonNeko/s4n-donate-system/refs/heads/main/public/15.png
   variables:
     - type: DOMAIN
       key: PUBLIC_DOMAIN
@@ -58,7 +59,7 @@ spec:
 
   services:
     - name: s4n-donate-system
-      icon: 
+      icon: https://raw.githubusercontent.com/LokiSalmonNeko/s4n-donate-system/refs/heads/main/public/15.png
       template: PREBUILT
       domainKey: PUBLIC_DOMAIN
       spec:
