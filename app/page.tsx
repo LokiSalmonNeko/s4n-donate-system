@@ -111,6 +111,14 @@ export default function HomePage() {
   return (
     <div>
       <div className="ts-container is-narrow has-top-spaced-large">
+        {/* Streamer Name & Slogan (Outside Box) */}
+        <div style={{ marginBottom: '1.5rem', textAlign: settings.siteNameAlign || 'center' }}>
+          <div className="ts-header is-heavy is-big">{settings.siteName || 'S4N Donate'}</div>
+        </div>
+        <div style={{ marginBottom: '2rem', textAlign: settings.sloganAlign || 'center' }}>
+          <div className="ts-text is-secondary">{settings.slogan || '您的支持是我們最大的動力！'}</div>
+        </div>
+
         <div className="ts-box">
           {/* Banner */}
           {settings.bannerUrl && (
@@ -122,13 +130,6 @@ export default function HomePage() {
               />
             </div>
           )}
-
-          <div className="ts-content" style={{ textAlign: settings.siteNameAlign || 'center' }}>
-            <div className="ts-header is-heavy">{settings.siteName || 'S4N Donate'}</div>
-          </div>
-          <div className="ts-content" style={{ textAlign: settings.sloganAlign || 'center' }}>
-            <div className="ts-text is-secondary">{settings.slogan || '您的支持是我們最大的動力！'}</div>
-          </div>
 
           <div className="ts-divider"></div>
 

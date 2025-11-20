@@ -19,6 +19,7 @@ export default function DashboardPage() {
         amountColor: '#ff6b6b',
         fontSize: 32,
         messageFontSize: 24,
+        themeColor: '#00d1b2',
         animationDuration: 1000,
         backgroundColor: '#ffffff',
         borderColor: '#000000',
@@ -324,6 +325,30 @@ export default function DashboardPage() {
                                         onChange={(e) => setSettings({ ...settings, messageFontSize: parseInt(e.target.value) })}
                                     />
                                 </div>
+                            </div>
+                            <div className="column">
+                                <label className="ts-text is-label">主體色系 (Theme Color)</label>
+                                <div className="ts-grid is-2-columns">
+                                    <div className="column is-fluid">
+                                        <div className="ts-input is-fluid">
+                                            <input
+                                                type="text"
+                                                value={settings.themeColor || '#00d1b2'}
+                                                onChange={(e) => setSettings({ ...settings, themeColor: e.target.value })}
+                                                placeholder="#00d1b2"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="column">
+                                        <input
+                                            type="color"
+                                            value={settings.themeColor || '#00d1b2'}
+                                            onChange={(e) => setSettings({ ...settings, themeColor: e.target.value })}
+                                            style={{ width: '100%', height: '38px', padding: '0', border: 'none' }}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="ts-text is-small is-secondary has-top-spaced-small">影響按鈕、登入畫面及後台的主色調</div>
                             </div>
                             <div className="column">
                                 <label className="ts-text is-label">動畫效果</label>

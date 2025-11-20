@@ -17,7 +17,7 @@ export async function POST(request: Request) {
         const {
             imageUrl, soundUrl, fontFamily, duration, animationType,
             textColor, amountColor, fontSize, messageFontSize,
-            animationDuration, backgroundColor, borderColor,
+            animationDuration, backgroundColor, borderColor, themeColor,
             alertWidth, alertHeight, verticalAlign, horizontalAlign,
             bannerUrl, logoUrl, siteName, siteNameAlign, browserTitle, slogan, sloganAlign,
             enableEcpay, enableOpay, messageTemplate
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
                 data: {
                     imageUrl, soundUrl, fontFamily, duration, animationType,
                     textColor, amountColor, fontSize, messageFontSize,
-                    animationDuration, backgroundColor, borderColor,
+                    animationDuration, backgroundColor, borderColor, themeColor,
                     alertWidth, alertHeight, verticalAlign, horizontalAlign,
                     bannerUrl, logoUrl, siteName, siteNameAlign, browserTitle, slogan, sloganAlign,
                     enableEcpay, enableOpay, messageTemplate
@@ -44,7 +44,7 @@ export async function POST(request: Request) {
                 data: {
                     imageUrl, soundUrl, fontFamily, duration, animationType,
                     textColor, amountColor, fontSize, messageFontSize,
-                    animationDuration, backgroundColor, borderColor,
+                    animationDuration, backgroundColor, borderColor, themeColor,
                     alertWidth, alertHeight, verticalAlign, horizontalAlign,
                     bannerUrl, logoUrl, siteName, siteNameAlign, browserTitle, slogan, sloganAlign,
                     enableEcpay, enableOpay, messageTemplate
